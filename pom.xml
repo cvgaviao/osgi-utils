@@ -1,0 +1,276 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<groupId>com.c4biz.osgiutils</groupId>
+	<artifactId>com.c4biz.osgiutils</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>OSGi Utilities :: Parent POM</name>
+
+	<organization>
+		<name>C4biz Tecnologia em Sistemas de Informação</name>
+		<!-- <url>www.c4biz.com.br</url> -->
+	</organization>
+
+	<developers>
+		<developer>
+			<id>cvgaviao</id>
+			<name>Cristiano Gavião</name>
+			<email>cvgaviao@gmail.com</email>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+	<properties>
+		<shiro-version>1.2.0-SNAPSHOT</shiro-version>
+		<mysql-connector>5.1.18</mysql-connector>
+		<derby-version>10.8.2.2</derby-version>
+		<drools.version>5.3.2-SNAPSHOT</drools.version>
+		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho-version>0.14.0-SNAPSHOT</tycho-version>
+		<indigo-repo>http://download.eclipse.org/releases/indigo</indigo-repo>
+		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/I20120109153617/repository</orbit-site>
+	</properties>
+
+	<profiles>
+
+		<profile>
+			<!-- this build will create the p2 using the last bundles installed on 
+				the maven repository -->
+			<id>p2-all</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<defaultGoal>verify</defaultGoal>
+			</build>
+			<modules>
+				<module>com.c4biz.osgiutils.p2</module>
+				<module>com.c4biz.osgiutils.feature.drools-jbpm</module>
+				<module>com.c4biz.osgiutils.feature.derby</module>
+				<module>com.c4biz.osgiutils.feature.mysql</module>
+				<module>com.c4biz.osgiutils.feature.logging</module>
+				<module>com.c4biz.osgiutils.feature.cm</module>
+				<module>com.c4biz.osgiutils.feature.security.shiro</module>
+				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
+				<module>com.c4biz.osgiutils.feature.vaadin6.shiro</module>
+				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
+				<module>com.c4biz.osgiutils.configuration.commands.equinox</module>
+				<module>com.c4biz.osgiutils.configuration.manager</module>
+				<module>com.c4biz.osgiutils.logging</module>
+				<module>com.c4biz.osgiutils.jdk.deps</module>
+			</modules>
+		</profile>
+
+	</profiles>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- SHIRO -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-quartz</artifactId>
+				<version>${shiro-version}</version>
+			</dependency>
+
+			<!--drools -->
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>knowledge-api</artifactId>
+				<version>${drools.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-core</artifactId>
+				<version>${drools.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-compiler</artifactId>
+				<version>${drools.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>org.drools</groupId> -->
+			<!-- <artifactId>drools-persistence-jpa</artifactId> -->
+			<!-- <version>${drools.version}</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>org.drools</groupId> -->
+			<!-- <artifactId>drools-grid-impl</artifactId> -->
+			<!-- <version>${drools.version}</version> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-flow</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-flow-builder</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-bpmn2</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-human-task</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-persistence-jpa</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-bam</artifactId>
+				<version>${jbpm.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.derby</groupId>
+				<artifactId>derbyclient</artifactId>
+				<version>${derby-version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>Orbit</id>
+			<url>${orbit-site}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>Indigo</id>
+			<url>${indigo-repo}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<build>
+
+		<resources>
+			<resource>
+				<directory>./</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>feature.properties</include>
+				</includes>
+				<targetPath>./</targetPath>
+			</resource>
+			<resource>
+				<directory>OSGI-INF/l10n</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>bundle.properties</include>
+				</includes>
+				<targetPath>OSGI-INF/l10n</targetPath>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!-- enable tycho build -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-maven-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<extensions>true</extensions>
+
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>target-platform-configuration</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<resolver>p2</resolver>
+						<pomDependencies>consider</pomDependencies>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

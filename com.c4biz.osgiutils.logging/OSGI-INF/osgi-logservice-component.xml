@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="com.c4biz.osgiutils.logging.reader.LogReaderComponent">
+   <implementation class="com.c4biz.osgiutils.logging.reader.LogReaderComponent"/>
+   <reference bind="addLogReaderService" cardinality="0..n" interface="org.osgi.service.log.LogReaderService" name="LogReaderService" policy="dynamic" unbind="removeLogReaderService"/>
+   <!--reference bind="addExtendedLogReaderService" cardinality="0..n" interface="org.eclipse.equinox.log.ExtendedLogReaderService" name="ExtendedLogReaderService" policy="dynamic" unbind="removeExtendedLogReaderService"/-->
+</scr:component>

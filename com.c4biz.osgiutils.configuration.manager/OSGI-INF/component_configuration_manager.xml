@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" immediate="true" modified="modified" name="com.c4biz.osgiutils.configuration.manager.spi.SystemConfigurationComponent">
+   <implementation class="com.c4biz.osgiutils.configuration.manager.spi.SystemConfigurationComponent"/>
+   <reference bind="bindLogService" cardinality="1..1" interface="org.osgi.service.log.LogService" name="LogServiceCoreConfig" policy="static" unbind="unbindLogService"/>
+   <reference bind="bindEventAdmin" cardinality="1..1" interface="org.osgi.service.event.EventAdmin" name="EventAdminCoreConfig" policy="static" unbind="unbindEventAdmin"/>
+   <reference bind="bindPreferenceService" cardinality="1..1" interface="org.osgi.service.prefs.PreferencesService" name="PreferencesServiceCoreConfig" policy="static" unbind="unbindPreferenceService"/>
+   <reference bind="bindConfigurationAdmin" cardinality="1..1" interface="org.osgi.service.cm.ConfigurationAdmin" name="ConfigurationAdminCoreConfig" policy="static" unbind="unbindConfigurationAdmin"/>
+    <service>
+       <provide interface="com.c4biz.osgiutils.configuration.manager.service.IConfigurationService"/>
+   </service>
+    <property name="configurationIncludePattern" type="String" value="*.cfg"/>
+    <property name="configurationExcludePattern" type="String" value="*.off"/>
+    <property name="configurationBasedir" type="String" value="/config"/>
+</scr:component>

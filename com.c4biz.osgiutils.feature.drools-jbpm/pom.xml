@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.c4biz.osgiutils</groupId>
+		<artifactId>com.c4biz.osgiutils</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+
+	<artifactId>com.c4biz.osgiutils.feature.drools-jbpm</artifactId>
+	<name>OSGi Utilities :: Drools and JBPM Feature</name>
+	<packaging>eclipse-feature</packaging>
+
+	<dependencies>
+		<!-- jBPM5 Dependencies -->
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-flow-builder</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-bpmn2</artifactId>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.jbpm</groupId> -->
+		<!-- <artifactId>jbpm-human-task</artifactId> -->
+		<!-- <version>${jbpm.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jbpm</groupId> -->
+		<!-- <artifactId>jbpm-persistence-jpa</artifactId> -->
+		<!-- <version>${jbpm.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jbpm</groupId> -->
+		<!-- <artifactId>jbpm-bam</artifactId> -->
+		<!-- <version>${jbpm.version}</version> -->
+		<!-- </dependency> -->
+
+		<!-- Drools Dependencies -->
+		<!-- Snapshot API -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>knowledge-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.drools</groupId> -->
+		<!-- <artifactId>drools-persistence-jpa</artifactId> -->
+		<!-- <version>${drools.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.drools</groupId> -->
+		<!-- <artifactId>drools-grid-impl</artifactId> -->
+		<!-- <version>${drools.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.drools</groupId> -->
+		<!-- <artifactId>drools-spring</artifactId> -->
+		<!-- <version>${drools.version}</version> -->
+		<!-- <type>jar</type> -->
+		<!-- </dependency> -->
+	</dependencies>
+
+</project>

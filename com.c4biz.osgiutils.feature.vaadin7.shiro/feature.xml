@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.c4biz.osgiutils.feature.vaadin-osgi7"
+      label="%featureName"
+      version="0.0.1.qualifier"
+      provider-name="%providerName">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="com.c4biz.osgiutils.vaadin7"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.c4biz.osgiutils.vaadin.resourceproxy"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.vaadin"
+         download-size="0"
+         install-size="0"
+         version="7.0.0.qualifier"
+         unpack="false"/>
+
+</feature>
