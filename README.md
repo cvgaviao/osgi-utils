@@ -4,13 +4,18 @@
 
 Nowadays I'm working a lot with OSGi, more precisally with Equinox. And I'm using two tools to build my projects: Eclipse Tycho for manifes-first projects and Maven Bundle Plugin for pom-first projects. 
 
-It is not possible to build both types same time using tycho. It must be done in two steps always. 
+It is not possible to build both types of project same time using Tycho. It must be done in two steps always. 
 
-So, to help me I've decided to create one P2 Repository and concentrate there the most important bundles that I'm using, grouped by features, including already OSGi and OSGified ones.
+So, to help me, I've decided to create one P2 Repository and concentrate there the most important bundles that I'm using, grouped by features, including those that are already OSGi and those that was OSGified (by maven-bundle-plugin).
 
-This way all other projects can be setup a Target Platform Definition pointing to it and only use Tycho for the building.
+This way all other projects can be setup using a Target Platform Definition file pointing to the P2 and I can only use Tycho for the entire building.
 
-The P2 was categorized in two type: OSGi Utils, that contains utilities made by myself or based in somebody work and Dependencies, that is basically a repackaging of already existent bundles.
+The P2 has two categories: 
+
+**OSGi Utils**, that contains utilities made by myself or that was based in somebody work; 
+
+**Dependencies**, that is basically a repackaging of already existent bundles or OSGified ones.
+
 
 ##Building the P2 Repository
 
