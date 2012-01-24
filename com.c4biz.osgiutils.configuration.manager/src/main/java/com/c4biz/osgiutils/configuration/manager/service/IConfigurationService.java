@@ -21,16 +21,9 @@ public interface IConfigurationService  {
 
 	static final String CONFIGURATION_BASE_DIR_FIELD_NAME = "configurationBasedir";
 
+	public final static String	SERVICE_FACTORYPID		= "service.factoryPid";
 
-	
-	/**
-	 * if not exists, it creates and initializes (with no properties) a configuration store for the informed
-	 * PID. If the store for the PID already exists it will be released and
-	 * initialized again.
-	 * 
-	 * @param pid
-	 */
-	void initializeConfigurationStore(String pid);
+	public final static String	SERVICE_PID		= "service.pid";
 
 	/**
 	 * if not exists, it creates and initializes with the informed properties a configuration store for the informed
@@ -39,15 +32,34 @@ public interface IConfigurationService  {
 	 * 
 	 * @param pid
 	 */
-	void initializeConfigurationStore(String pid, Dictionary<String, Object> properties);
+	void initializeConfigurationStore(String pid, Dictionary<String, String> properties);
 
-	Dictionary<String, Object> getProperties(String pid);
+	/**
+	 * if not exists, it creates and initializes with the informed properties a configuration store for the informed
+	 * PID. If the store for the PID already exists it will be released and
+	 * initialized again.
+	 * 
+	 * @param pid
+	 */
+	void initializeFactoryConfigurationStore(String factoryPid, String pid, Dictionary<String, String> properties);
 
-	Object getProperty(String pid, String propertyName);
+	Dictionary<String, String> getProperties(String pid);
+
+	String getProperty(String pid, String propertyName);
 
 	void deleteProperties(String pid);
 
-	void putProperty(String pid, String propertyName, Object value);
+	void putProperty(String pid, String propertyName, String value);
 
-	void putProperties(String pid, Dictionary<String, Object> properties);
+	void putProperties(String pid, Dictionary<String, String> properties);
+
+	Dictionary<String, String> getFactoryProperties(String factoryPid, String pid);
+	
+	String getFactoryProperty(String factoryPid, String pid, String propertyName);
+	
+	void deleteFactoryProperties(String factoryPid, String pid);
+	
+	void putFactoryProperty(String factoryPid, String pid, String propertyName, String value);
+	
+	void putFactoryProperties(String factoryPid, String pid, Dictionary<String, String> properties);
 }

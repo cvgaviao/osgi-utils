@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,6 @@ public class SystemConfigurationComponent implements IConfigurationService {
 	private PreferencesService preferenceService;
 	private LogService logService;
 	private BundleContext bundleContext;
-
 
 	/**
 	 * It is possible to configure using a Properties File dropped on eclipse
@@ -68,9 +68,17 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		List<String> configFiles = scan(p_basePath, asList(p_includePattern),
 				asList(p_excludePattern));
 		for (String configFile : configFiles) {
-			initializeConfigurationStore(
-					extractPidFromConfigFileName(configFile),
-					dictionaryFromPropertiesFile(configFile));
+
+			Map<String, String> pids = extractPidsFromConfigFileName(configFile);
+			Dictionary<String, String> values = dictionaryFromPropertiesFile(configFile);
+
+			if (pids.containsKey(SERVICE_FACTORYPID)) {
+				initializeFactoryConfigurationStore(
+						pids.get(SERVICE_FACTORYPID), pids.get(SERVICE_PID),
+						values);
+			} else {
+				initializeConfigurationStore(pids.get(SERVICE_PID), values);
+			}
 		}
 
 	}
@@ -81,17 +89,47 @@ public class SystemConfigurationComponent implements IConfigurationService {
 				"Binded ConfigurationAdmin Service.");
 	}
 
+	protected void bindLogService(LogService logService) {
+		this.logService = logService;
+		getLogService().log(LogService.LOG_DEBUG, "Binded LogService.");
+	}
+
 	protected void bindPreferenceService(PreferencesService preferenceService) {
 		this.preferenceService = preferenceService;
-		getLogService().log(LogService.LOG_DEBUG,
-				"Binded Preferences Service.");
+		getLogService()
+				.log(LogService.LOG_DEBUG, "Binded Preferences Service.");
 	}
 
 	protected void deactivate(ComponentContext context,
 			Map<String, Object> properties) {
 
-		getLogService().log(LogService.LOG_DEBUG,
-				"Binded Preferences Service.");
+		getLogService()
+				.log(LogService.LOG_DEBUG, "Binded Preferences Service.");
+	}
+
+	@Override
+	public void deleteFactoryProperties(String factoryPid, String pid) {
+		Configuration configuration;
+		try {
+			configuration = findFactoryConfiguration(factoryPid, pid);
+			if (configuration != null)
+				try {
+					configuration.delete();
+				} catch (IOException e) {
+					getLogService().log(LogService.LOG_ERROR,
+							"Error on setup Configuration Service", e);
+				}
+			else
+				getLogService().log(
+						LogService.LOG_DEBUG,
+						"no configuration for factoryPid '" + factoryPid
+								+ "' and pid '" + pid + "'");
+		} catch (IOException e1) {
+			getLogService().log(
+					LogService.LOG_ERROR,
+					"no configuration for factoryPid '" + factoryPid
+							+ "' and pid '" + pid + "'", e1);
+		}
 	}
 
 	public void deleteProperties(String pid) {
@@ -115,15 +153,14 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	}
 
-	private Dictionary<String, Object> dictionaryFromPropertiesFile(
+	private Dictionary<String, String> dictionaryFromPropertiesFile(
 			String configFile) {
 		// Read properties file.
 		Properties properties = new Properties();
-		Dictionary<String, Object> map = new Hashtable<String, Object>();
+		Dictionary<String, String> map = new Hashtable<String, String>();
 
 		try {
-			URL configURL = bundleContext.getBundle().getResource(
-					configFile);
+			URL configURL = bundleContext.getBundle().getResource(configFile);
 			if (configURL != null) {
 				InputStream input = null;
 				try {
@@ -134,7 +171,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 					Enumeration<?> list = properties.propertyNames();
 					while (list.hasMoreElements()) {
 						String propertyName = (String) list.nextElement();
-						map.put(propertyName, properties.get(propertyName));
+						map.put(propertyName,
+								(String) properties.get(propertyName));
 					}
 
 				} finally {
@@ -154,7 +192,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		return map;
 	}
 
-	private String extractPidFromConfigFileName(String configFile) {
+	private Map<String, String> extractPidsFromConfigFileName(String configFile) {
+		Map<String, String> pids = new HashMap<String, String>(2);
 		String separator = System.getProperty("file.separator");
 		String filename;
 
@@ -165,18 +204,26 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		} else {
 			filename = configFile.substring(lastSeparatorIndex + 1);
 		}
-		
-		// Remove qualifier (if it exists)
+
+		// Factory (if it exists)
 		int qualifierIndex = filename.lastIndexOf("_");
-		if (qualifierIndex != -1)
-			return filename.substring(0, qualifierIndex);
-
-		// Remove the extension.
 		int extensionIndex = filename.lastIndexOf(".");
-		if (extensionIndex == -1)
-			return filename;
-
-		return filename.substring(0, extensionIndex);
+		if (qualifierIndex != -1) {
+			pids.put(SERVICE_FACTORYPID, filename.substring(0, qualifierIndex));
+			if (extensionIndex != -1) {
+				pids.put(SERVICE_PID,
+						filename.substring(qualifierIndex + 1, extensionIndex));
+			} else {
+				pids.put(SERVICE_PID, filename.substring(qualifierIndex));
+			}
+		} else {
+			if (extensionIndex == -1) {
+				pids.put(SERVICE_PID, filename);
+			} else {
+				pids.put(SERVICE_PID, filename.substring(0, extensionIndex));
+			}
+		}
+		return pids;
 	}
 
 	protected Configuration findConfiguration(String pid) throws IOException {
@@ -194,28 +241,45 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		return null;
 	}
 
+	protected Configuration findFactoryConfiguration(String factoryPid,
+			String pid) throws IOException {
+		// As ConfigurationAdmin.getConfiguration creates the configuration if
+		// it is not yet there, we check its existence first
+		try {
+			Configuration[] configurations = getConfigurationAdminService()
+					.listConfigurations(
+							"&(service.factoryPid=" + factoryPid
+									+ ") (service.pid=" + pid + ")");
+			if (configurations != null && configurations.length > 0) {
+				return configurations[0];
+			}
+		} catch (InvalidSyntaxException e) {
+		}
+
+		return null;
+	}
+
 	protected ConfigurationAdmin getConfigurationAdminService() {
 		return configurationAdmin;
 	}
 
-
-	protected PreferencesService getPreferenceService() {
-		return preferenceService;
-	}
-
 	@SuppressWarnings("unchecked")
-	public Dictionary<String, Object> getProperties(String pid) {
+	@Override
+	public Dictionary<String, String> getFactoryProperties(String factoryPid,
+			String pid) {
 		try {
-			Dictionary<String, Object> allProperties = new Hashtable<String, Object>();
+			Dictionary<String, String> allProperties = new Hashtable<String, String>();
 			Configuration[] configurations = getConfigurationAdminService()
-					.listConfigurations("(service.pid=" + pid + ")");
+					.listConfigurations(
+							"&(service.factoryPid=" + factoryPid
+									+ ") (service.pid=" + pid + ")");
 			if (configurations != null && configurations.length > 0) {
 				for (Configuration configuration : configurations) {
 					Enumeration<String> keys = configuration.getProperties()
 							.keys();
 					while (keys.hasMoreElements()) {
 						String object = keys.nextElement();
-						Object value = configuration.getProperties()
+						String value = (String) configuration.getProperties()
 								.get(object);
 						allProperties.put(object, value);
 					}
@@ -233,17 +297,79 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		return null;
 	}
 
-	public Object getProperty(String pid, String propertyName) {
+	@Override
+	public String getFactoryProperty(String factoryPid, String pid,
+			String propertyName) {
+		Configuration configuration;
+		try {
+			configuration = findFactoryConfiguration(factoryPid, pid);
+			if (configuration != null)
+				return (String) configuration.getProperties().get(propertyName);
+			else
+				getLogService()
+						.log(LogService.LOG_WARNING,
+								"no configuration for FactoryPID: '"
+										+ factoryPid
+										+ "' and PID: '"
+										+ pid
+										+ "' (use 'initializeFactoryConfigurationStore' to create one)");
+		} catch (IOException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Error on setup Configuration Service", e);
+		}
+		return null;
+	}
+
+	protected LogService getLogService() {
+		return logService;
+	}
+
+	protected PreferencesService getPreferenceService() {
+		return preferenceService;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Dictionary<String, String> getProperties(String pid) {
+		try {
+			Dictionary<String, String> allProperties = new Hashtable<String, String>();
+			Configuration[] configurations = getConfigurationAdminService()
+					.listConfigurations("(service.pid=" + pid + ")");
+			if (configurations != null && configurations.length > 0) {
+				for (Configuration configuration : configurations) {
+					Enumeration<String> keys = configuration.getProperties()
+							.keys();
+					while (keys.hasMoreElements()) {
+						String object = keys.nextElement();
+						String value = (String) configuration.getProperties()
+								.get(object);
+						allProperties.put(object, value);
+					}
+				}
+				return allProperties;
+			}
+		} catch (InvalidSyntaxException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Error on setup Configuration Service", e);
+		} catch (IOException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Error on setup Configuration Service", e);
+		}
+
+		return null;
+	}
+
+	public String getProperty(String pid, String propertyName) {
 		Configuration configuration;
 		try {
 			configuration = findConfiguration(pid);
 			if (configuration != null)
-				return configuration.getProperties().get(propertyName);
+				return (String) configuration.getProperties().get(propertyName);
 			else
-				getLogService().log(
-						LogService.LOG_WARNING,
-						"no configuration for pid '" + pid
-								+ "' (use 'create' to create one)");
+				getLogService()
+						.log(LogService.LOG_WARNING,
+								"no configuration for pid '"
+										+ pid
+										+ "' (use 'initializeFactoryConfigurationStore' to create one)");
 		} catch (IOException e) {
 			getLogService().log(LogService.LOG_ERROR,
 					"Error on setup Configuration Service", e);
@@ -252,37 +378,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 	}
 
 	@Override
-	public void initializeConfigurationStore(String pid) {
-		Configuration configuration;
-
-		try {
-
-			if (configurationAdmin == null)
-				throw new RuntimeException(
-						"Configuration Admin Manager was not wired !!!");
-
-			configuration = configurationAdmin.getConfiguration(pid, null);
-			// Ensure update is called, when properties are null; otherwise
-			// configuration will not
-			// be returned when listConfigurations is called (see specification
-			// 104.15.3.7)
-			if (configuration.getProperties() == null) {
-				configuration.update(new Hashtable<String, String>());
-				getLogService().log(LogService.LOG_DEBUG,
-						"Initialized store under pid: '" + pid + "'.");
-			} else {
-				getLogService().log(LogService.LOG_WARNING,
-						"duplicated data !!!");
-			}
-		} catch (IOException e) {
-			getLogService().log(LogService.LOG_ERROR,
-					"Error on setup Configuration Service.", e);
-		}
-	}
-
-	@Override
 	public void initializeConfigurationStore(String pid,
-			Dictionary<String, Object> properties) {
+			Dictionary<String, String> properties) {
 		Configuration configuration;
 
 		try {
@@ -297,10 +394,15 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			// be returned when listConfigurations is called (see specification
 			// 104.15.3.7)
 			if (configuration.getProperties() == null) {
+				if (properties == null) {
+					properties = new Hashtable<String, String>();
+				}
 				configuration.update(properties);
 				getLogService().log(
 						LogService.LOG_DEBUG,
-						"Initialized store under PID: '" + pid + "', with this properties: " + properties.toString());
+						"Initialized store under PID: '" + pid
+								+ "', with this properties: "
+								+ properties.toString());
 			} else {
 				getLogService()
 						.log(LogService.LOG_ERROR, "duplicated data !!!");
@@ -311,17 +413,121 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		}
 	}
 
+	@Override
+	public void initializeFactoryConfigurationStore(String factoryPid,
+			String pid, Dictionary<String, String> properties) {
+		Configuration configuration;
+
+		try {
+
+			if (configurationAdmin == null)
+				throw new RuntimeException(
+						"Configuration Admin Manager was not wired !!!");
+
+			configuration = configurationAdmin.createFactoryConfiguration(
+					factoryPid, null);
+			if (configuration.getProperties() == null) {
+				if (properties == null) {
+					properties = new Hashtable<String, String>();
+				}
+
+				// add the PID as a property
+				properties.put(SERVICE_PID, pid);
+				properties.put(SERVICE_FACTORYPID, factoryPid);
+
+				configuration.update(properties);
+				getLogService().log(
+						LogService.LOG_DEBUG,
+						"Initialized store under FactoryPID: '" + factoryPid
+								+ "' and PID: '" + pid
+								+ "' , with this properties: "
+								+ properties.toString());
+			} else {
+				getLogService()
+						.log(LogService.LOG_ERROR, "duplicated data !!!");
+			}
+		} catch (IOException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Error on setup Configuration Service", e);
+		}
+	}
 
 	@Override
-	public void putProperties(String pid, Dictionary<String, Object> properties) {
+	public void putFactoryProperties(String factoryPid, String pid,
+			Dictionary<String, String> properties) {
+		Configuration config;
+		try {
+			config = findFactoryConfiguration(factoryPid, pid);
+			if (config == null) {
+				getLogService()
+						.log(LogService.LOG_ERROR,
+								"no configuration for FactoryPID: '"
+										+ factoryPid
+										+ "' and PID: '"
+										+ pid
+										+ "' (use 'initializeFactoryConfigurationStore' to create one)");
+				return;
+			}
+
+			if (properties != null) {
+				properties.put(SERVICE_FACTORYPID, factoryPid);
+				properties.put(SERVICE_PID, pid);
+				config.update(properties);
+			}
+		} catch (IOException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Error on setup Configuration Service", e);
+		}
+	}
+
+	@Override
+	public void putFactoryProperty(String factoryPid, String pid,
+			String propertyName, String value) {
+		Configuration config;
+		try {
+			config = findFactoryConfiguration(factoryPid, pid);
+			if (config == null) {
+				getLogService()
+						.log(LogService.LOG_ERROR,
+								"no configuration for for FactoryPID: '"
+										+ factoryPid
+										+ "' and PID: '"
+										+ pid
+										+ "' (use 'initializeFactoryConfigurationStore' to create one)");
+				return;
+			}
+			if (value != null) {
+				@SuppressWarnings("unchecked")
+				Dictionary<String, String> properties = config.getProperties();
+				if (properties == null)
+					properties = new Hashtable<String, String>();
+
+				properties.put(propertyName, value);
+				properties.put(SERVICE_FACTORYPID, factoryPid);
+				properties.put(SERVICE_PID, pid);
+				config.update(properties);
+			}
+		} catch (IOException e) {
+			getLogService()
+					.log(LogService.LOG_ERROR,
+							"no configuration for pid '"
+									+ pid
+									+ "' (use 'initializeFactoryConfigurationStore' to create one)");
+
+		}
+	}
+
+	@Override
+	public void putProperties(String pid, Dictionary<String, String> properties) {
 		Configuration config;
 		try {
 			config = findConfiguration(pid);
 			if (config == null) {
-				getLogService().log(
-						LogService.LOG_ERROR,
-						"no configuration for pid '" + pid
-								+ "' (use 'create' to create one)");
+				getLogService()
+						.log(LogService.LOG_ERROR,
+								"no configuration for pid '"
+										+ pid
+										+ "' (use 'initializeConfigurationStore' to create one)");
 				return;
 			}
 
@@ -336,15 +542,16 @@ public class SystemConfigurationComponent implements IConfigurationService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void putProperty(String pid, String propertyName, Object value) {
+	public void putProperty(String pid, String propertyName, String value) {
 		Configuration config;
 		try {
 			config = findConfiguration(pid);
 			if (config == null) {
-				getLogService().log(
-						LogService.LOG_ERROR,
-						"no configuration for pid '" + pid
-								+ "' (use 'create' to create one)");
+				getLogService()
+						.log(LogService.LOG_ERROR,
+								"no configuration for pid '"
+										+ pid
+										+ "' (use 'initializeConfigurationStore' to create one)");
 				return;
 			}
 			if (value != null) {
@@ -356,10 +563,11 @@ public class SystemConfigurationComponent implements IConfigurationService {
 				config.update(properties);
 			}
 		} catch (IOException e) {
-			getLogService().log(
-					LogService.LOG_ERROR,
-					"no configuration for pid '" + pid
-							+ "' (use 'create' to create one)");
+			getLogService()
+					.log(LogService.LOG_ERROR,
+							"no configuration for pid '"
+									+ pid
+									+ "' (use 'initializeConfigurationStore' to create one)");
 
 		}
 
@@ -406,26 +614,17 @@ public class SystemConfigurationComponent implements IConfigurationService {
 				"Unbinded ConfigurationAdminService");
 	}
 
-	protected void unbindPreferenceService(PreferencesService preferenceService) {
-		if (this.preferenceService == preferenceService)
-			this.preferenceService = null;
-		getLogService().log(LogService.LOG_DEBUG,
-				"Unbinded Preferences Service");
-	}
-	
-	protected void bindLogService(LogService logService) {
-		this.logService = logService;
-		getLogService().log(LogService.LOG_DEBUG, "Binded LogService.");
-	}
-
-	protected LogService getLogService() {
-		return logService;
-	}
-
 	protected void unbindLogService(LogService logService) {
 		if (this.logService == logService) {
 			getLogService().log(LogService.LOG_DEBUG, "Unbinded LogService.");
 			this.logService = null;
 		}
+	}
+
+	protected void unbindPreferenceService(PreferencesService preferenceService) {
+		if (this.preferenceService == preferenceService)
+			this.preferenceService = null;
+		getLogService().log(LogService.LOG_DEBUG,
+				"Unbinded Preferences Service");
 	}
 }

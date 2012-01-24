@@ -16,13 +16,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 public class PutCommand extends AbstractCmSubCommand {
 
 	@Override
-	protected void doCommand(BundleContext context, String cmd,
+	protected void doCommand(ConfigurationAdmin configurationAdmin, String cmd,
 			List<String> args, String commandLine) throws IOException {
 
 		Configuration config = findConfiguration(pid);

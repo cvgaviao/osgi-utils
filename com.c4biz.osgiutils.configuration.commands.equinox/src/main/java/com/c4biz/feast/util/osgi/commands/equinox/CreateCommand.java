@@ -16,13 +16,13 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 public class CreateCommand extends AbstractCmSubCommand {
 
     @Override
-    protected void doCommand(BundleContext context, String cmd, List<String> args, String commandLine) throws IOException {
+    protected void doCommand(ConfigurationAdmin configurationAdmin, String cmd, List<String> args, String commandLine) throws IOException {
         Configuration configuration;
         if (args.size() > 0) {
             configuration = configurationAdmin.getConfiguration(pid, (String) args.get(0));

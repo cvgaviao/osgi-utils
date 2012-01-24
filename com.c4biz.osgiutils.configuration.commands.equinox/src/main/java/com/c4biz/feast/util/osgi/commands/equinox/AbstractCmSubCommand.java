@@ -18,9 +18,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -31,17 +29,16 @@ public abstract class AbstractCmSubCommand implements CmSubCommand {
 	protected PrintStream out;
 	protected PrintStream err;
 
+	
+	
 	/**
 	 * @param  commandLine     the full command line as provided by the framework, can be null.
 	 */
-	public void execute(BundleContext context, String cmd, List<String> args, String commandLine, PrintStream out, PrintStream err) {
+	public void execute(ConfigurationAdmin configurationAdmin, String cmd, List<String> args, String commandLine, PrintStream out, PrintStream err) {
 
 		this.out = out;
 		this.err = err;
-		ServiceReference<ConfigurationAdmin> serviceReference = context.getServiceReference(ConfigurationAdmin.class);
-		if (serviceReference != null) {
-			configurationAdmin = context.getService(serviceReference);
-		}
+		
 		if (configurationAdmin == null) {
 			error("no ConfigurationAdmin service");
 			return;
@@ -57,7 +54,7 @@ public abstract class AbstractCmSubCommand implements CmSubCommand {
 				error("Missing argument: pid");
 				return;
 			}
-			doCommand(context, cmd, args.subList(usedArgs, args.size()), commandLine);
+			doCommand(configurationAdmin, cmd, args.subList(usedArgs, args.size()), commandLine);
 		} catch (IOException e) {
 			error("Configuration Admin service could not access persistent storage: " + e);
 		}
@@ -134,6 +131,6 @@ public abstract class AbstractCmSubCommand implements CmSubCommand {
         out.println("");
     }
 
-    protected abstract void doCommand(BundleContext context, String cmd, List<String> args, String commandLine)
+    protected abstract void doCommand(ConfigurationAdmin configurationAdmin, String cmd, List<String> args, String commandLine)
 		throws IOException;
 }

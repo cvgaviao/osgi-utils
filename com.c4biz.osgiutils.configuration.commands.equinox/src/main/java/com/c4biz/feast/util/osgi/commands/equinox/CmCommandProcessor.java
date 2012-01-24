@@ -16,15 +16,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 public class CmCommandProcessor {
 
-	private BundleContext context;
+	private ConfigurationAdmin configAdminService;
 	private Map<String, CmSubCommand> commands;
 
-	public CmCommandProcessor(BundleContext context) {
-		this.context = context;
+	public CmCommandProcessor(ConfigurationAdmin configurationAdmin) {
+		this.configAdminService = configurationAdmin;
 		commands = new HashMap<String, CmSubCommand>();
 		commands.put("help", new Help());
 		commands.put("list", new ListCommand());
@@ -43,34 +43,34 @@ public class CmCommandProcessor {
 		if (args.size() >= 1) {
 			String cmd = (String) args.get(0);
 			if (commands.containsKey(cmd)) {
-				((CmSubCommand) commands.get(cmd)).execute(context, cmd, args,
+				((CmSubCommand) commands.get(cmd)).execute(configAdminService, cmd, args,
 						commandLine, out, err);
 			} else {
-				new Help().execute(context, null, args, null, out, err);
+				new Help().execute(configAdminService, null, args, null, out, err);
 			}
 		} else {
-			new Help().execute(context, null, args, null, out, err);
+			new Help().execute(configAdminService, null, args, null, out, err);
 		}
 	}
 
 	static public class Help implements CmSubCommand {
 
-		public void execute(BundleContext context, String cmd,
+		public void execute(ConfigurationAdmin configurationAdmin, String cmd,
 				List<String> args, String cmdLine, PrintStream out,
 				PrintStream err) {
 
 			err.println("Usage:");
-			err.println(" configurationAdmin help                  print this help message");
-			err.println(" configurationAdmin list                  list all known configurations");
-			err.println(" configurationAdmin get <pid>             show configuration for service <pid>");
-			err.println(" configurationAdmin getv <pid>            verbose get (shows value types also)");
-			err.println(" configurationAdmin put <pid> key value   set string value for service <pid>");
-			err.println(" configurationAdmin puts <pid> key value  set \"simple\" value for service <pid>: value is \"true\", \"false\",");
+			err.println(" cm help                  print this help message");
+			err.println(" cm list                  list all known configurations");
+			err.println(" cm get <pid>             show configuration for service <pid>");
+			err.println(" cm getv <pid>            verbose get (shows value types also)");
+			err.println(" cm put <pid> key value   set string value for service <pid>");
+			err.println(" cm puts <pid> key value  set \"simple\" value for service <pid>: value is \"true\", \"false\",");
 			err.println("                          a char in single quotes, an int, or a number, with appended: ");
 			err.println("                          i (Integer), l (Long), f (Float), d (Double), b (Byte), s (Short)");
-			err.println(" configurationAdmin del <pid>             deletes configuration for service <pid>");
-			err.println(" configurationAdmin create <pid> [<loc>]  creates configuration for service <pid> (with optional bundle location)");
-			err.println(" configurationAdmin createf <factoryPid> [<loc>] creates configuration for service factory <factoryPid> (with optional bundle location)");
+			err.println(" cm del <pid>             deletes configuration for service <pid>");
+			err.println(" cm create <pid> [<loc>]  creates configuration for service <pid> (with optional bundle location)");
+			err.println(" cm createf <factoryPid> [<loc>] creates configuration for service factory <factoryPid> (with optional bundle location)");
 		}
 	}
 

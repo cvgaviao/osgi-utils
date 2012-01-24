@@ -14,10 +14,10 @@ package com.c4biz.feast.util.osgi.commands.equinox;
 import java.io.PrintStream;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 public interface CmSubCommand {
 
-	public void execute(BundleContext context, String cmd, List<String> args,
+	public void execute(ConfigurationAdmin configurationAdmin, String cmd, List<String> args,
 			String commandLine, PrintStream out, PrintStream err);
 }

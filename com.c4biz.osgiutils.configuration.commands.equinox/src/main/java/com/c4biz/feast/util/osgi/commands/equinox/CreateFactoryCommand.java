@@ -15,13 +15,13 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 public class CreateFactoryCommand extends AbstractCmSubCommand {
 
 	@Override
-	protected void doCommand(final BundleContext context, final String cmd,
+	protected void doCommand(final ConfigurationAdmin configurationAdmin, final String cmd,
 			final List<String> args, final String commandLine)
 			throws IOException {
 		final Configuration configuration;

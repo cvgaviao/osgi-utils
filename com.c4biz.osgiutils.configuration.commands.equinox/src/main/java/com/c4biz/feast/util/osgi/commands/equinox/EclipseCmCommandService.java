@@ -17,10 +17,15 @@ import java.util.List;
 import org.eclipse.osgi.framework.console.CommandInterpreter;
 import org.eclipse.osgi.framework.console.CommandProvider;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.log.LogService;
 
 public class EclipseCmCommandService implements CommandProvider {
 
 	protected BundleContext bundleContext;
+	private LogService logService;
+	private ConfigurationAdmin configurationAdmin;
+
 
 	public EclipseCmCommandService() {
 	}
@@ -29,9 +34,15 @@ public class EclipseCmCommandService implements CommandProvider {
 		this.bundleContext = context;
 	}
 
+	@Override
 	public String getHelp() {
-		return "\tcm help|list|get... - Access OSGi Configuration Admin service";
+		StringBuffer help = new StringBuffer();
+		help.append("\r\n--- Configuration Management Service ---\r\n");
+		help.append("\tcm [help|list|get|put|create|creatf] ...");
+		help.append("\r\n");
+		return help.toString();
 	}
+
 
 	public void _cm(CommandInterpreter ci) {
 		List<String> args = new ArrayList<String>();
@@ -40,7 +51,41 @@ public class EclipseCmCommandService implements CommandProvider {
 			args.add(arg);
 		}
 
-		new CmCommandProcessor(bundleContext).execute(args, null, System.out,
+		new CmCommandProcessor(configurationAdmin).execute(args, null, System.out,
 				System.err);
 	}
+
+	protected void bindLogService(LogService logService) {
+		this.logService = logService;
+		getLogService().log(LogService.LOG_DEBUG, "Binded LogService.");
+	}
+
+	protected void bindConfigurationAdmin(ConfigurationAdmin configurationAdmin) {
+		this.configurationAdmin = configurationAdmin;
+		getLogService().log(LogService.LOG_DEBUG,
+				"Binded ConfigurationAdmin Service.");
+	}
+
+	protected ConfigurationAdmin getConfigurationAdminService() {
+		return configurationAdmin;
+	}
+
+	protected LogService getLogService() {
+		return logService;
+	}
+
+	protected void unbindLogService(LogService logService) {
+		if (this.logService == logService) {
+			getLogService().log(LogService.LOG_DEBUG, "Unbinded LogService.");
+			this.logService = null;
+		}
+	}
+	protected void unbindConfigurationAdmin(
+			ConfigurationAdmin configurationAdmin) {
+		if (this.configurationAdmin == configurationAdmin)
+			this.configurationAdmin = null;
+		getLogService().log(LogService.LOG_DEBUG,
+				"Unbinded ConfigurationAdminService");
+	}
+
 }
