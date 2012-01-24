@@ -19,5 +19,4 @@ Require-Bundle: javax.servlet;bundle-version="2.5.0",
  com.vaadin;bundle-version="6.7.4",
  org.apache.shiro.core;bundle-version="1.2.0",
  org.apache.shiro.web;bundle-version="1.2.0"
-Service-Component: OSGI-INF/web_resource_http_context_component.xml
 
