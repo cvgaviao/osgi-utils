@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Vaadin-OSGi Shiro Example: Equinox Vaadin Product" uid="com.c4biz.osgiutils.examples.vaadin-shiro.product" id="com.c4biz.osgiutils.examples.vaadin-shiro.server.productweb" application="com.c4biz.osgiutils.examples.vaadin-shiro.server.application" version="0.0.1.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <text>
+         FEAST - BackOffice - Equinox Server with Remote Communication Support.
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-consoleLog -console -noExit</programArgs>
+      <vmArgs>-Dorg.osgi.service.http.port=8080</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+      <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</linux>
+      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</macos>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6</windows>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="com.c4biz.osgiutils.examples.vaadin-shiro.feature" version="0.0.1.qualifier"/>
+   </features>
+
+   <configurations>
+      <plugin id="com.c4biz.osgiutils.configuration.commands.equinox" autoStart="true" startLevel="0" />
+      <plugin id="com.c4biz.osgiutils.configuration.manager" autoStart="true" startLevel="1" />
+      <plugin id="com.c4biz.osgiutils.examples.vaadin-shiro.application" autoStart="true" startLevel="4" />
+      <plugin id="com.c4biz.osgiutils.logging.reader" autoStart="true" startLevel="1" />
+      <plugin id="com.c4biz.osgiutils.vaadin6.shiro" autoStart="true" startLevel="3" />
+      <plugin id="com.vaadin" autoStart="true" startLevel="3" />
+      <plugin id="javax.servlet" autoStart="true" startLevel="3" />
+      <plugin id="javax.servlet.jsp" autoStart="false" startLevel="0" />
+      <plugin id="org.apache.shiro.core" autoStart="true" startLevel="3" />
+      <plugin id="org.apache.shiro.quartz" autoStart="true" startLevel="3" />
+      <plugin id="org.apache.shiro.web" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.cm" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.http.servlet" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.log" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.preferences" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.registry" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.util" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
+      <plugin id="org.eclipse.osgi.services" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.osgi.util" autoStart="true" startLevel="2" />
+      <plugin id="org.mortbay.jetty.server" autoStart="true" startLevel="3" />
+      <plugin id="org.mortbay.jetty.util" autoStart="true" startLevel="3" />
+      <plugin id="org.quartz" autoStart="true" startLevel="2" />
+   </configurations>
+
+</product>
