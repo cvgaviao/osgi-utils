@@ -24,10 +24,6 @@
                name="appName"
                value="Vaadin-OSGi Shiro Example: Equinox Vaadin Product">
          </property>
-         <property
-               name="aboutText"
-               value="FEAST - BackOffice - Equinox Server with Remote Communication Support.">
-         </property>
       </product>
    </extension>
 
