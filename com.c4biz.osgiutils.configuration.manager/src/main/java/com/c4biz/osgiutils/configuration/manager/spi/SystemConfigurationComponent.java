@@ -211,8 +211,12 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		if (qualifierIndex != -1) {
 			pids.put(SERVICE_FACTORYPID, filename.substring(0, qualifierIndex));
 			if (extensionIndex != -1) {
-				pids.put(SERVICE_PID,
-						filename.substring(qualifierIndex + 1, extensionIndex));
+				String pid = filename.substring(qualifierIndex + 1,
+						extensionIndex);
+				if (!pid.isEmpty()) {
+					pids.put(SERVICE_PID, filename.substring(
+							qualifierIndex + 1, extensionIndex));
+				}
 			} else {
 				pids.put(SERVICE_PID, filename.substring(qualifierIndex));
 			}
@@ -404,8 +408,10 @@ public class SystemConfigurationComponent implements IConfigurationService {
 								+ "', with this properties: "
 								+ properties.toString());
 			} else {
-				getLogService()
-						.log(LogService.LOG_ERROR, "duplicated data !!!");
+				getLogService().log(
+						LogService.LOG_WARNING,
+						"Configuration for PID was already initialized: ' "
+								+ pid + "'.");
 			}
 		} catch (IOException e) {
 			getLogService().log(LogService.LOG_ERROR,
@@ -432,8 +438,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 				}
 
 				// add the PID as a property
-				properties.put(SERVICE_PID, pid);
-				properties.put(SERVICE_FACTORYPID, factoryPid);
+				if (pid != null && !pid.isEmpty())
+					properties.put(SERVICE_PID, pid);
 
 				configuration.update(properties);
 				getLogService().log(
@@ -443,8 +449,10 @@ public class SystemConfigurationComponent implements IConfigurationService {
 								+ "' , with this properties: "
 								+ properties.toString());
 			} else {
-				getLogService()
-						.log(LogService.LOG_ERROR, "duplicated data !!!");
+				getLogService().log(
+						LogService.LOG_WARNING,
+						"Configuration for FactoryPID was already initialized: ' "
+								+ factoryPid + "'.");
 			}
 		} catch (IOException e) {
 			getLogService().log(LogService.LOG_ERROR,
