@@ -91,6 +91,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.c4biz.osgiutils</groupId>
+			<artifactId>com.c4biz.osgiutils.feature.jbehave</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin</artifactId>
 			<version>6.7.4</version>

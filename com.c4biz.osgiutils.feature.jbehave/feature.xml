@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.c4biz.osgiutils.feature.jbehave"
+      label="%featureName"
+      version="0.0.1.qualifier"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.hamcrest.core" version="1.1.0" match="equivalent"/>
+      <import plugin="org.hamcrest.text" version="1.1.0" match="equivalent"/>
+      <import plugin="org.hamcrest.integration" version="1.1.0" match="equivalent"/>
+      <import plugin="org.hamcrest" version="1.1.0" match="equivalent"/>
+      <import plugin="org.hamcrest.library" version="1.1.0" match="equivalent"/>
+      <import plugin="org.junit" version="4.8.2" match="equivalent"/>
+   </requires>
+
+   <plugin
+         id="org.jbehave.osgi.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.hamcrest.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.hamcrest.integration"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.hamcrest"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.hamcrest.library"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.hamcrest.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.junit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
