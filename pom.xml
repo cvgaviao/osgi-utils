@@ -64,6 +64,7 @@
 				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.logging</module>
 				<module>com.c4biz.osgiutils.jdk.deps</module>
+				<module>com.c4biz.osgiutils.feature.jbehave</module>
 			</modules>
 		</profile>
 
@@ -187,6 +188,12 @@
 			<layout>p2</layout>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tycho-snapshots</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 
