@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.c4biz.osgiutils</groupId>
+		<artifactId>com.c4biz.osgiutils</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+  <artifactId>com.c4biz.osgiutils.tests</artifactId>
+  <packaging>eclipse-test-plugin</packaging>
+  
+  	<properties>
+		<local-p2-site>file:/${basedir}/../behave-osgi-equinox-repository/target/repository</local-p2-site>
+		<ui.test.vmargs>-Xmx512m -XX:MaxPermSize=256m</ui.test.vmargs>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<includes>
+						<include>org.jbehave.osgi.services.test.CoreCommandProviderTest</include>
+					</includes>
+					<failIfNoTests>false</failIfNoTests>
+					<showEclipseLog>true</showEclipseLog>
+					<!-- <argLine>${ui.test.vmargs}</argLine> -->
+					<bundleStartLevel>
+						<bundle>
+							<id>org.eclipse.equinox.common</id>
+							<level>1</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipse.equinox.ds</id>
+							<level>2</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipse.equinox.cm</id>
+							<level>2</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipse.equinox.events</id>
+							<level>2</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.jbehave.osgi.services</id>
+							<level>1</level>
+							<autoStart>true</autoStart>
+						</bundle>
+					</bundleStartLevel>
+
+					<dependencies>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.jbehave.osgi.services</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>eclipse-plugin</type>
+							<artifactId>org.jbehave.osgi.services.test</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
+
+					<excludes>
+						<!-- test mojo matches TestProject be default and treats it as PojoTest -->
+						<exclude>**/Test*.class</exclude>
+					</excludes>
+					<useUIHarness>false</useUIHarness>
+					<useUIThread>false</useUIThread>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+</project>
