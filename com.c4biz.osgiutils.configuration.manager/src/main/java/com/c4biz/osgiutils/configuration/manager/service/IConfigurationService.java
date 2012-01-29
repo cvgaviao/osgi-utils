@@ -32,7 +32,7 @@ public interface IConfigurationService  {
 	 * 
 	 * @param pid
 	 */
-	void initializeConfigurationStore(String pid, Dictionary<String, String> properties);
+	void initializeConfigurationStore(String pid, Dictionary<String, Object> properties);
 
 	/**
 	 * if not exists, it creates and initializes with the informed properties a configuration store for the informed
@@ -41,25 +41,25 @@ public interface IConfigurationService  {
 	 * 
 	 * @param pid
 	 */
-	void initializeFactoryConfigurationStore(String factoryPid, String pid, Dictionary<String, String> properties);
+	void initializeFactoryConfigurationStore(String factoryPid, String pid, Dictionary<String, Object> properties);
 
-	Dictionary<String, String> getProperties(String pid);
+	Dictionary<String, Object> getProperties(String pid);
 
 	String getProperty(String pid, String propertyName);
 
 	void deleteProperties(String pid);
 
-	void putProperty(String pid, String propertyName, String value);
+	void putProperty(String pid, String propertyName, Object value);
 
-	void putProperties(String pid, Dictionary<String, String> properties);
+	void putProperties(String pid, Dictionary<String, Object> properties);
 
-	Dictionary<String, String> getFactoryProperties(String factoryPid, String pid);
+	Dictionary<String, Object> getFactoryProperties(String factoryPid, String pid);
 	
 	String getFactoryProperty(String factoryPid, String pid, String propertyName);
 	
 	void deleteFactoryProperties(String factoryPid, String pid);
 	
-	void putFactoryProperty(String factoryPid, String pid, String propertyName, String value);
+	void putFactoryProperty(String factoryPid, String pid, String propertyName, Object value);
 	
-	void putFactoryProperties(String factoryPid, String pid, Dictionary<String, String> properties);
+	void putFactoryProperties(String factoryPid, String pid, Dictionary<String, Object> properties);
 }

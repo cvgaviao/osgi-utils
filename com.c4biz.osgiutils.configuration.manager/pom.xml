@@ -8,7 +8,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>com.c4biz.osgiutils.configuration.manager</artifactId>
-	<name>OSGi Utilities :: Configuration Service</name>
+	<name>OSGi Utilities :: Configuration Manager Service Wrapper Bundle</name>
 	<packaging>eclipse-plugin</packaging>
 
 	<dependencies>

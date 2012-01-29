@@ -27,20 +27,27 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.log.LogService;
-import org.osgi.service.prefs.PreferencesService;
+
 import com.c4biz.osgiutils.configuration.manager.service.IConfigurationService;
 
+/**
+ * To use this class you MUST ensure the the following bundles are with StartLevel set to 1 and with auto-start = true:
+ * - org.eclipse.equinox.ds
+ * - org.eclipse.equinox.cm => org.osgi.service.cm.ConfigurationAdmin
+ * - org.eclipse.equinox.log => org.osgi.service.log.LogService
+ * 
+ * @author cvgaviao
+ *
+ */
 public class SystemConfigurationComponent implements IConfigurationService {
 
 	private ConfigurationAdmin configurationAdmin;
-	private PreferencesService preferenceService;
 	private LogService logService;
 	private BundleContext bundleContext;
 
@@ -57,6 +64,18 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			Map<String, Object> properties) {
 
 		bundleContext = context.getBundleContext();
+		
+		if (getLogService() == null)
+		{
+			System.out.println("OSGi Logging Service was not started properly!");
+		}
+		
+		if (getConfigurationAdminService() == null)
+		{
+			getLogService().log(LogService.LOG_ERROR,
+					"ConfigurationAdmin Service was not setup properly !");
+		}
+		
 		// get the configuration info from default
 		String p_basePath = (String) properties
 				.get(IConfigurationService.CONFIGURATION_BASE_DIR_FIELD_NAME);
@@ -70,7 +89,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		for (String configFile : configFiles) {
 
 			Map<String, String> pids = extractPidsFromConfigFileName(configFile);
-			Dictionary<String, String> values = dictionaryFromPropertiesFile(configFile);
+			Dictionary<String, Object> values = dictionaryFromPropertiesFile(configFile);
 
 			if (pids.containsKey(SERVICE_FACTORYPID)) {
 				initializeFactoryConfigurationStore(
@@ -94,11 +113,6 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		getLogService().log(LogService.LOG_DEBUG, "Binded LogService.");
 	}
 
-	protected void bindPreferenceService(PreferencesService preferenceService) {
-		this.preferenceService = preferenceService;
-		getLogService()
-				.log(LogService.LOG_DEBUG, "Binded Preferences Service.");
-	}
 
 	protected void deactivate(ComponentContext context,
 			Map<String, Object> properties) {
@@ -153,11 +167,11 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	}
 
-	private Dictionary<String, String> dictionaryFromPropertiesFile(
+	private Dictionary<String, Object> dictionaryFromPropertiesFile(
 			String configFile) {
 		// Read properties file.
 		Properties properties = new Properties();
-		Dictionary<String, String> map = new Hashtable<String, String>();
+		Dictionary<String, Object> map = new Hashtable<String, Object>();
 
 		try {
 			URL configURL = bundleContext.getBundle().getResource(configFile);
@@ -267,12 +281,11 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		return configurationAdmin;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Dictionary<String, String> getFactoryProperties(String factoryPid,
+	public Dictionary<String, Object> getFactoryProperties(String factoryPid,
 			String pid) {
 		try {
-			Dictionary<String, String> allProperties = new Hashtable<String, String>();
+			Dictionary<String, Object> allProperties = new Hashtable<String, Object>();
 			Configuration[] configurations = getConfigurationAdminService()
 					.listConfigurations(
 							"&(service.factoryPid=" + factoryPid
@@ -328,14 +341,10 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		return logService;
 	}
 
-	protected PreferencesService getPreferenceService() {
-		return preferenceService;
-	}
 
-	@SuppressWarnings("unchecked")
-	public Dictionary<String, String> getProperties(String pid) {
+	public Dictionary<String, Object> getProperties(String pid) {
 		try {
-			Dictionary<String, String> allProperties = new Hashtable<String, String>();
+			Dictionary<String, Object> allProperties = new Hashtable<String, Object>();
 			Configuration[] configurations = getConfigurationAdminService()
 					.listConfigurations("(service.pid=" + pid + ")");
 			if (configurations != null && configurations.length > 0) {
@@ -383,7 +392,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	@Override
 	public void initializeConfigurationStore(String pid,
-			Dictionary<String, String> properties) {
+			Dictionary<String, Object> properties) {
 		Configuration configuration;
 
 		try {
@@ -399,7 +408,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			// 104.15.3.7)
 			if (configuration.getProperties() == null) {
 				if (properties == null) {
-					properties = new Hashtable<String, String>();
+					properties = new Hashtable<String, Object>();
 				}
 				configuration.update(properties);
 				getLogService().log(
@@ -421,7 +430,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	@Override
 	public void initializeFactoryConfigurationStore(String factoryPid,
-			String pid, Dictionary<String, String> properties) {
+			String pid, Dictionary<String, Object> properties) {
 		Configuration configuration;
 
 		try {
@@ -434,7 +443,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 					factoryPid, null);
 			if (configuration.getProperties() == null) {
 				if (properties == null) {
-					properties = new Hashtable<String, String>();
+					properties = new Hashtable<String, Object>();
 				}
 
 				// add the PID as a property
@@ -462,7 +471,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	@Override
 	public void putFactoryProperties(String factoryPid, String pid,
-			Dictionary<String, String> properties) {
+			Dictionary<String, Object> properties) {
 		Configuration config;
 		try {
 			config = findFactoryConfiguration(factoryPid, pid);
@@ -490,7 +499,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 	@Override
 	public void putFactoryProperty(String factoryPid, String pid,
-			String propertyName, String value) {
+			String propertyName, Object value) {
 		Configuration config;
 		try {
 			config = findFactoryConfiguration(factoryPid, pid);
@@ -505,10 +514,9 @@ public class SystemConfigurationComponent implements IConfigurationService {
 				return;
 			}
 			if (value != null) {
-				@SuppressWarnings("unchecked")
-				Dictionary<String, String> properties = config.getProperties();
+				Dictionary<String, Object> properties = config.getProperties();
 				if (properties == null)
-					properties = new Hashtable<String, String>();
+					properties = new Hashtable<String, Object>();
 
 				properties.put(propertyName, value);
 				properties.put(SERVICE_FACTORYPID, factoryPid);
@@ -526,7 +534,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 	}
 
 	@Override
-	public void putProperties(String pid, Dictionary<String, String> properties) {
+	public void putProperties(String pid, Dictionary<String, Object> properties) {
 		Configuration config;
 		try {
 			config = findConfiguration(pid);
@@ -549,8 +557,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void putProperty(String pid, String propertyName, String value) {
+	public void putProperty(String pid, String propertyName, Object value) {
 		Configuration config;
 		try {
 			config = findConfiguration(pid);
@@ -585,9 +592,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			List<String> excludes) {
 
 		List<String> scannedItens = new ArrayList<String>();
-		BundleContext ctx = FrameworkUtil.getBundle(getClass())
-				.getBundleContext();
-		BundleWiring wiring = ctx.getBundle().adapt(BundleWiring.class);
+		BundleWiring wiring = bundleContext.getBundle().adapt(BundleWiring.class);
 
 		if (includes != null) {
 			for (String filePattern : includes) {
@@ -627,12 +632,5 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			getLogService().log(LogService.LOG_DEBUG, "Unbinded LogService.");
 			this.logService = null;
 		}
-	}
-
-	protected void unbindPreferenceService(PreferencesService preferenceService) {
-		if (this.preferenceService == preferenceService)
-			this.preferenceService = null;
-		getLogService().log(LogService.LOG_DEBUG,
-				"Unbinded Preferences Service");
 	}
 }

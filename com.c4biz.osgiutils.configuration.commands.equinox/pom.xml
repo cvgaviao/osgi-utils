@@ -9,6 +9,6 @@
 	</parent>
 
 	<artifactId>com.c4biz.osgiutils.configuration.commands.equinox</artifactId>
-	<name>OSGi Utilities :: Equinox Commands Service</name>
+	<name>OSGi Utilities :: Equinox Commands Service Bundle</name>
 	<packaging>eclipse-plugin</packaging>
 </project>
