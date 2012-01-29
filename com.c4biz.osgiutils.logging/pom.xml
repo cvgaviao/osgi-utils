@@ -10,5 +10,5 @@
 
 	<artifactId>com.c4biz.osgiutils.logging.reader</artifactId>
 	<packaging>eclipse-plugin</packaging>
-	<name>OSGi Utilities :: Logging Reader</name>
+	<name>OSGi Utilities :: General Logging Reader</name>
 </project>

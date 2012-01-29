@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>com.c4biz.osgiutils.feature.security.shiro</artifactId>
-	<name>OSGi Utilities :: Shiro Security Feature</name>
+	<name>OSGi Utilities :: Feature for Apache Shiro Security bundles</name>
 	<packaging>eclipse-feature</packaging>
 
 	<repositories>

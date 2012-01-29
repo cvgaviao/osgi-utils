@@ -13,7 +13,7 @@
 
 
 	<artifactId>com.c4biz.osgiutils.feature.drools-jbpm</artifactId>
-	<name>OSGi Utilities :: Drools and JBPM Feature</name>
+	<name>OSGi Utilities :: Feature for Drools and JBPM bundles</name>
 	<packaging>eclipse-feature</packaging>
 
 	<dependencies>

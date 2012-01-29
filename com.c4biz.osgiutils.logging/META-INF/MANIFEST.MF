@@ -11,8 +11,8 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: OSGI-INF/l10n/bundle
 Service-Component: OSGI-INF/osgi-logservice-component.xml
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: ch.qos.logback.classic;bundle-version="[0.9.27,1.0.0]",
- ch.qos.logback.core;bundle-version="[0.9.27,1.0.0]",
- org.slf4j.api;bundle-version="[1.6.1,1.6.2]"
+Require-Bundle: ch.qos.logback.classic;bundle-version="[0.9.27,1.0.1]",
+ ch.qos.logback.core;bundle-version="[0.9.27,1.0.1]",
+ org.slf4j.api;bundle-version="[1.6.1,1.6.5]"
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName

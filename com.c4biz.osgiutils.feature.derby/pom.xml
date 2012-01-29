@@ -13,7 +13,7 @@
 
 
 	<artifactId>com.c4biz.osgiutils.feature.derby</artifactId>
-	<name>OSGi Utilities :: Derby Feature</name>
+	<name>OSGi Utilities :: Feature for Derby bundles</name>
 	<packaging>eclipse-feature</packaging>
 
 	<dependencies>
