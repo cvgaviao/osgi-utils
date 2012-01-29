@@ -1,0 +1,2 @@
+This target platform definition was created to easy the maintanence of OSGi-Utils projects.
+It should be used only after you have built the p2 repository. 
