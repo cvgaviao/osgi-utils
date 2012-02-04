@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>com.c4biz.osgiutils</groupId>
+		<artifactId>com.c4biz.osgiutils</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<packaging>eclipse-plugin</packaging>
+	<name>OSGi Utilities :: Common OSGi Assertions Bundle</name>
+	<artifactId>com.c4biz.osgiutils.assertions</artifactId>
+
+<!-- 	<dependencies> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hamcrest</groupId> -->
+<!-- 			<artifactId>hamcrest-core</artifactId> -->
+<!-- 			</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hamcrest</groupId> -->
+<!-- 			<artifactId>hamcrest-library</artifactId> -->
+<!-- 			</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hamcrest</groupId> -->
+<!-- 			<artifactId>hamcrest-integration</artifactId> -->
+<!-- 			</dependency> -->
+<!-- 	</dependencies> -->
+</project>
