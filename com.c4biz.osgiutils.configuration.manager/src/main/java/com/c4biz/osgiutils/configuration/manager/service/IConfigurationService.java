@@ -23,8 +23,6 @@ public interface IConfigurationService  {
 
 	public final static String	SERVICE_FACTORYPID		= "service.factoryPid";
 
-	public final static String	SERVICE_PID		= "service.pid";
-
 	/**
 	 * if not exists, it creates and initializes with the informed properties a configuration store for the informed
 	 * PID. If the store for the PID already exists it will be released and
@@ -62,4 +60,6 @@ public interface IConfigurationService  {
 	void putFactoryProperty(String factoryPid, String pid, String propertyName, Object value);
 	
 	void putFactoryProperties(String factoryPid, String pid, Dictionary<String, Object> properties);
+
+	void displayFactoryConfiguration(String factoryPid);
 }

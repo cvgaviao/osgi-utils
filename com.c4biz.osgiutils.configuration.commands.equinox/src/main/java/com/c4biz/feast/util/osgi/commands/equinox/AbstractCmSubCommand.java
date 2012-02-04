@@ -87,7 +87,6 @@ public abstract class AbstractCmSubCommand implements CmSubCommand {
         return null;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void print(Configuration configuration, boolean verbose)
 	{
 	    out.println("");

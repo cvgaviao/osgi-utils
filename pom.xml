@@ -34,19 +34,23 @@
 		<drools.version>5.3.2-SNAPSHOT</drools.version>
 		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
 		<tycho-version>0.14.0-SNAPSHOT</tycho-version>
-		<eclipse-repo>http://download.eclipse.org/releases/indigo</eclipse-repo>
+		<eclipse-repo>http://download.eclipse.org/releases/juno</eclipse-repo>
 		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
+		<equinox-p2>http://download.eclipse.org/eclipse/updates/3.8milestones</equinox-p2>
 	</properties>
 	<profiles>
 		<profile>
-			<id>test</id>
+			<id>cm</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<!-- Just to be able to import it to IDE to be able to setup the workspace, 
 					since the building is not using it. -->
-				<module>com.c4biz.osgiutils.target</module>
+				<module>com.c4biz.osgiutils.configuration.manager</module>
+				<module>com.c4biz.osgiutils.configuration.manager.test.conf</module>
+				<module>com.c4biz.osgiutils.configuration.tests</module>
+				<module>com.c4biz.osgiutils.assertions</module>
 			</modules>
 		</profile>
 		<profile>
@@ -70,15 +74,27 @@
 				<module>com.c4biz.osgiutils.feature.security.shiro</module>
 				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
 				<module>com.c4biz.osgiutils.feature.vaadin6</module>
-				<module>com.c4biz.osgiutils.feature.vaadin_osgi6.shiro</module>
+				<module>com.c4biz.osgiutils.feature.vaadin.equinox.shiro</module>
 				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
 				<module>com.c4biz.osgiutils.configuration.commands.equinox</module>
 				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.logging</module>
 				<module>com.c4biz.osgiutils.jdk.deps</module>
 				<module>com.c4biz.osgiutils.assertions</module>
-				<module>com.c4biz.osgiutils.tests</module>
+				<module>com.c4biz.osgiutils.configuration.tests</module>
 				<module>com.c4biz.osgiutils.configuration.manager.test.conf</module>
+				<module>org.eclipse.equinox.http.jetty</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>target</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<!-- Just to be able to import it to IDE to be able to setup the workspace, 
+					since the building is not using it. -->
+				<module>com.c4biz.osgiutils.target</module>
 			</modules>
 		</profile>
 
@@ -198,6 +214,17 @@
 		<repository>
 			<id>Orbit</id>
 			<url>${orbit-site}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>Equinox</id>
+			<url>${equinox-p2}</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>

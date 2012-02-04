@@ -8,4 +8,5 @@
 	</parent>
 
   <artifactId>com.c4biz.osgiutils.configuration.manager.test.conf</artifactId>
+  <packaging>eclipse-plugin</packaging>
 </project>

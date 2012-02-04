@@ -52,7 +52,6 @@ public class PutCommand extends AbstractCmSubCommand {
 				}
 			}
 			if (value != null) {
-				@SuppressWarnings("unchecked")
 				Dictionary<String, Object> properties = config.getProperties();
 				if (properties == null)
 					properties = new Hashtable<String, Object>();

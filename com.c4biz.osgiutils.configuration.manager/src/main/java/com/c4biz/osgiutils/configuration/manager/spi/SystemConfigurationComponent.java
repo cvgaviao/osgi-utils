@@ -12,7 +12,7 @@
 package com.c4biz.osgiutils.configuration.manager.spi;
 
 import static java.util.Arrays.asList;
-
+import static org.osgi.framework.Constants.SERVICE_PID;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,13 +37,13 @@ import org.osgi.service.log.LogService;
 import com.c4biz.osgiutils.configuration.manager.service.IConfigurationService;
 
 /**
- * To use this class you MUST ensure the the following bundles are with StartLevel set to 1 and with auto-start = true:
- * - org.eclipse.equinox.ds
- * - org.eclipse.equinox.cm => org.osgi.service.cm.ConfigurationAdmin
- * - org.eclipse.equinox.log => org.osgi.service.log.LogService
+ * To use this class you MUST ensure the the following bundles are with
+ * StartLevel set to 1 and with auto-start = true: - org.eclipse.equinox.ds -
+ * org.eclipse.equinox.cm => org.osgi.service.cm.ConfigurationAdmin -
+ * org.eclipse.equinox.log => org.osgi.service.log.LogService
  * 
  * @author cvgaviao
- *
+ * 
  */
 public class SystemConfigurationComponent implements IConfigurationService {
 
@@ -64,18 +64,17 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			Map<String, Object> properties) {
 
 		bundleContext = context.getBundleContext();
-		
-		if (getLogService() == null)
-		{
-			System.out.println("OSGi Logging Service was not started properly!");
+
+		if (getLogService() == null) {
+			System.out
+					.println("OSGi Logging Service was not started properly!");
 		}
-		
-		if (getConfigurationAdminService() == null)
-		{
+
+		if (getConfigurationAdminService() == null) {
 			getLogService().log(LogService.LOG_ERROR,
 					"ConfigurationAdmin Service was not setup properly !");
 		}
-		
+
 		// get the configuration info from default
 		String p_basePath = (String) properties
 				.get(IConfigurationService.CONFIGURATION_BASE_DIR_FIELD_NAME);
@@ -113,12 +112,12 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		getLogService().log(LogService.LOG_DEBUG, "Binded LogService.");
 	}
 
-
 	protected void deactivate(ComponentContext context,
 			Map<String, Object> properties) {
+		bundleContext = null;
 
-		getLogService()
-				.log(LogService.LOG_DEBUG, "Binded Preferences Service.");
+		getLogService().log(LogService.LOG_DEBUG,
+				"Configuration Manager Wrapper was deactivated.");
 	}
 
 	@Override
@@ -185,8 +184,7 @@ public class SystemConfigurationComponent implements IConfigurationService {
 					Enumeration<?> list = properties.propertyNames();
 					while (list.hasMoreElements()) {
 						String propertyName = (String) list.nextElement();
-						map.put(propertyName,
-								(String) properties.get(propertyName));
+						map.put(propertyName, properties.get(propertyName));
 					}
 
 				} finally {
@@ -266,8 +264,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		try {
 			Configuration[] configurations = getConfigurationAdminService()
 					.listConfigurations(
-							"&(service.factoryPid=" + factoryPid
-									+ ") (service.pid=" + pid + ")");
+							"(&(service.factoryPid=" + factoryPid
+									+ ") (service.pid=" + pid + "))");
 			if (configurations != null && configurations.length > 0) {
 				return configurations[0];
 			}
@@ -275,6 +273,30 @@ public class SystemConfigurationComponent implements IConfigurationService {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void displayFactoryConfiguration(String factoryPid) {
+		// As ConfigurationAdmin.getConfiguration creates the configuration if
+		// it is not yet there, we check its existence first
+		try {
+			Configuration[] configurations = getConfigurationAdminService()
+					.listConfigurations(
+							"(service.factoryPid=" + factoryPid + ")");
+			if (configurations != null && configurations.length > 0) {
+				for (int i = 0; i < configurations.length; i++) {
+					System.out.println("Factory PID= '" + factoryPid
+							+ "', PID = '" + configurations[i].getPid()
+							+ "', Location= '"
+							+ configurations[i].getBundleLocation() + "'");
+					System.out.println("Properties:"
+							+ configurations[i].getProperties().toString());
+				}
+			}
+		} catch (InvalidSyntaxException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected ConfigurationAdmin getConfigurationAdminService() {
@@ -286,10 +308,16 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			String pid) {
 		try {
 			Dictionary<String, Object> allProperties = new Hashtable<String, Object>();
+			String filter = "";
+			if (pid != null && !pid.isEmpty()) {
+				filter = "(&(service.factoryPid=" + factoryPid
+						+ ") (service.pid=" + pid + "))";
+			} else {
+				filter = "(service.factoryPid=" + factoryPid + ")";
+			}
+
 			Configuration[] configurations = getConfigurationAdminService()
-					.listConfigurations(
-							"&(service.factoryPid=" + factoryPid
-									+ ") (service.pid=" + pid + ")");
+					.listConfigurations(filter);
 			if (configurations != null && configurations.length > 0) {
 				for (Configuration configuration : configurations) {
 					Enumeration<String> keys = configuration.getProperties()
@@ -340,7 +368,6 @@ public class SystemConfigurationComponent implements IConfigurationService {
 	protected LogService getLogService() {
 		return logService;
 	}
-
 
 	public Dictionary<String, Object> getProperties(String pid) {
 		try {
@@ -451,6 +478,10 @@ public class SystemConfigurationComponent implements IConfigurationService {
 					properties.put(SERVICE_PID, pid);
 
 				configuration.update(properties);
+
+				// / just for test
+				displayFactoryConfiguration(factoryPid);
+
 				getLogService().log(
 						LogService.LOG_DEBUG,
 						"Initialized store under FactoryPID: '" + factoryPid
@@ -592,7 +623,8 @@ public class SystemConfigurationComponent implements IConfigurationService {
 			List<String> excludes) {
 
 		List<String> scannedItens = new ArrayList<String>();
-		BundleWiring wiring = bundleContext.getBundle().adapt(BundleWiring.class);
+		BundleWiring wiring = bundleContext.getBundle().adapt(
+				BundleWiring.class);
 
 		if (includes != null) {
 			for (String filePattern : includes) {
