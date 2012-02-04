@@ -17,16 +17,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.vaadin6.shiro</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.security.shiro</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin</artifactId>
 			<version>6.7.4</version>

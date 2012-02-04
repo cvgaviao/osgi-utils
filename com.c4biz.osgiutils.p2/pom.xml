@@ -96,7 +96,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.vaadin_osgi6.shiro</artifactId>
+			<artifactId>com.c4biz.osgiutils.feature.vaadin.equinox.shiro</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -109,10 +109,5 @@
 			<artifactId>com.c4biz.osgiutils.feature.security.shiro</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.vaadin</groupId> -->
-<!-- 			<artifactId>vaadin</artifactId> -->
-<!-- 			<version>6.7.4</version> -->
-<!-- 		</dependency> -->
 	</dependencies>
 </project>

@@ -11,8 +11,8 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>com.c4biz.osgiutils.feature.vaadin_osgi6.shiro</artifactId>
-	<name>OSGi Utilities :: Feature for Vaadin 6.x for OSGi bundle with Apache Shiro Security support</name>
+	<artifactId>com.c4biz.osgiutils.feature.vaadin.equinox.shiro</artifactId>
+	<name>OSGi Utilities :: Feature for Equinox server for Vaadin with Apache Shiro Security support</name>
 	<packaging>eclipse-feature</packaging>
 
 	<dependencies>

@@ -29,10 +29,14 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 import org.apache.shiro.web.servlet.IniShiroFilter;
+import org.eclipse.equinox.http.jetty.JettyConstants;
 import org.eclipse.equinox.http.servlet.ExtendedHttpService;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationException;
@@ -40,6 +44,7 @@ import org.osgi.service.cm.ManagedService;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.http.HttpContext;
 import org.osgi.service.http.HttpService;
+import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.vaadin.Application;
@@ -64,25 +69,84 @@ import com.vaadin.Application;
  * parameters that would normally passed to the Vaadin servlet as init
  * parameters.
  * 
- * @author brindy (with help from Neil Bartlett)
- * 		   cvgaviao - Integration with Shiro Security Framework.
+ * @author brindy (with help from Neil Bartlett) cvgaviao - Integration with
+ *         Shiro Security Framework.
  */
 public class Activator implements BundleActivator {
 
 	private VaadinAppTracker tracker;
-	
+	private LogService logService;
+	private Bundle jettyBundle;
+	private Bundle vaadinBundle;
+
 	protected static BundleContext bundleContext;
-	
+
+	protected void bindLogService(BundleContext context) {
+		ServiceReference<LogService> ref = context
+				.getServiceReference(LogService.class);
+		logService = context.getService(ref);
+
+		logService.log(LogService.LOG_DEBUG, "Binded LogService.");
+	}
+
+	protected LogService getLogService() {
+		return logService;
+	}
 
 	@Override
 	public void start(BundleContext context) throws Exception {
-		tracker = new VaadinAppTracker(context);
+
 		bundleContext = context;
+
+		// bind the log service
+		bindLogService(context);
+
+		// start the jetty with data from CM
+		startJetty(context);
+
+		// start the Vaadin bundle
+
+		startVaadin(context);
+
+		tracker = new VaadinAppTracker(context);
 		tracker.open();
+	}
+
+	private void startJetty(BundleContext context) {
+		
+		jettyBundle = FrameworkUtil.getBundle(JettyConstants.class);
+		if (jettyBundle == null) {
+			getLogService()
+					.log(LogService.LOG_ERROR,
+							"Bundle org.eclipse.equinox.http.jetty is not in target platform");
+		}
+
+	}
+
+	private void startVaadin(BundleContext context) {
+		
+		vaadinBundle = FrameworkUtil.getBundle(Application.class);
+		if (vaadinBundle == null) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Bundle com.vaadin is not in target platform");
+		}
+
+		// vaadin bundle doesn't have auto-start, so need to start it
+		try {
+			vaadinBundle.start();
+		} catch (BundleException e) {
+			getLogService().log(LogService.LOG_ERROR,
+					"Bundle com.vaadin had error on start up.", e);
+		}
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		
+		vaadinBundle.stop();
+		
+		jettyBundle.stop();
+		
 		tracker.close();
 		tracker = null;
 	}
@@ -90,61 +154,59 @@ public class Activator implements BundleActivator {
 }
 
 /**
- * This is the tracker which looks for the {@link ComponentFactory}
- * registrations. For each {@link ComponentFactory} found it creates a tracker
- * for {@link HttpService}.
+ * This class is responsible for registering the {@link ComponentFactory} as a
+ * vaadin {@link Application}. It is a {@link ManagedService} so that it can
+ * receive properties which are then passed in to the {@link VaadinOSGiServlet}
+ * as init parameters, e.g. to enable production mode.
  * 
  * @author brindy
  */
-@SuppressWarnings(value = { "rawtypes", "unchecked" })
-class VaadinAppTracker extends ServiceTracker {
+class AppRegistration implements ManagedService {
 
-	private static final String PREFIX = "com.vaadin.Application";
+	private final ExtendedHttpService http;
 
-	private Map<ServiceReference, HttpServiceTracker> trackers = new IdentityHashMap<ServiceReference, HttpServiceTracker>();
+	private final ComponentFactory factory;
 
-	public VaadinAppTracker(BundleContext ctx) throws InvalidSyntaxException {
-		super(ctx, ctx
-				.createFilter("(component.factory=com.vaadin.Application/*)"),
-				null);
+	private final String alias;
+
+	private VaadinOSGiServlet servlet;
+
+	private IniShiroFilter filter;
+
+	public AppRegistration(ExtendedHttpService http, ComponentFactory factory,
+			String alias) {
+		super();
+		this.http = http;
+		this.factory = factory;
+		this.alias = alias;
+	}
+
+	public void kill() {
+		if (servlet != null) {
+			http.unregister(alias);
+			http.unregisterFilter(filter);
+			servlet.destroy();
+			servlet = null;
+		}
 	}
 
 	@Override
-	public Object addingService(ServiceReference reference) {
-		Object o = super.addingService(reference);
+	public void updated(@SuppressWarnings("rawtypes") Dictionary properties)
+			throws ConfigurationException {
+		kill();
+		servlet = new VaadinOSGiServlet(factory);
+		filter = new IniShiroFilter();
+		String RESOURCE_BASE = "/VAADIN";
+		try {
+			HttpContext defaultContext = new WebResourcesHttpContext(
+					Activator.bundleContext.getBundle());
+			http.registerFilter("/", filter, properties, defaultContext);
+			http.registerServlet(alias, servlet, properties, defaultContext);
 
-		if (o instanceof ComponentFactory) {
-			ComponentFactory factory = (ComponentFactory) o;
-			String name = (String) reference.getProperty("component.factory");
-
-			String alias = name.substring(PREFIX.length());
-
-			HttpServiceTracker tracker = new HttpServiceTracker(this.context,
-					factory, alias);
-			tracker.open();
-
-			HttpServiceTracker oldTracker = trackers.put(reference, tracker);
-
-			if (oldTracker != null) {
-				oldTracker.close();
-				oldTracker = null;
-			}
-
-			tracker.open();
+			http.registerResources(RESOURCE_BASE, RESOURCE_BASE, defaultContext);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-
-		return o;
-	}
-
-	@Override
-	public void removedService(ServiceReference reference, Object service) {
-
-		HttpServiceTracker tracker = trackers.remove(reference);
-		if (tracker != null) {
-			tracker.close();
-			tracker = null;
-		}
-
 	}
 
 }
@@ -206,58 +268,61 @@ class HttpServiceTracker extends ServiceTracker {
 }
 
 /**
- * This class is responsible for registering the {@link ComponentFactory} as a
- * vaadin {@link Application}. It is a {@link ManagedService} so that it can
- * receive properties which are then passed in to the {@link VaadinOSGiServlet}
- * as init parameters, e.g. to enable production mode.
+ * This is the tracker which looks for the {@link ComponentFactory}
+ * registrations. For each {@link ComponentFactory} found it creates a tracker
+ * for {@link HttpService}.
  * 
  * @author brindy
  */
-class AppRegistration implements ManagedService {
+@SuppressWarnings(value = { "rawtypes", "unchecked" })
+class VaadinAppTracker extends ServiceTracker {
 
-	private final ExtendedHttpService http;
+	private static final String PREFIX = "com.vaadin.Application";
 
-	private final ComponentFactory factory;
+	private Map<ServiceReference, HttpServiceTracker> trackers = new IdentityHashMap<ServiceReference, HttpServiceTracker>();
 
-	private final String alias;
-
-	private VaadinOSGiServlet servlet;
-	
-	private IniShiroFilter filter;
-
-	public AppRegistration(ExtendedHttpService http, ComponentFactory factory,
-			String alias) {
-		super();
-		this.http = http;
-		this.factory = factory;
-		this.alias = alias;
+	public VaadinAppTracker(BundleContext ctx) throws InvalidSyntaxException {
+		super(ctx, ctx
+				.createFilter("(component.factory=com.vaadin.Application/*)"),
+				null);
 	}
 
 	@Override
-	public void updated(@SuppressWarnings("rawtypes") Dictionary properties)
-			throws ConfigurationException {
-		kill();
-		servlet = new VaadinOSGiServlet(factory);
-		filter = new IniShiroFilter();
-		String RESOURCE_BASE = "/VAADIN";
-		try {
-			HttpContext defaultContext = new WebResourcesHttpContext(Activator.bundleContext.getBundle());
-			http.registerFilter("/", filter, properties, defaultContext);
-			http.registerServlet(alias, servlet, properties, defaultContext);
-			
-			http.registerResources(RESOURCE_BASE, RESOURCE_BASE, defaultContext);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+	public Object addingService(ServiceReference reference) {
+		Object o = super.addingService(reference);
+
+		if (o instanceof ComponentFactory) {
+			ComponentFactory factory = (ComponentFactory) o;
+			String name = (String) reference.getProperty("component.factory");
+
+			String alias = name.substring(PREFIX.length());
+
+			HttpServiceTracker tracker = new HttpServiceTracker(this.context,
+					factory, alias);
+			tracker.open();
+
+			HttpServiceTracker oldTracker = trackers.put(reference, tracker);
+
+			if (oldTracker != null) {
+				oldTracker.close();
+				oldTracker = null;
+			}
+
+			tracker.open();
 		}
+
+		return o;
 	}
 
-	public void kill() {
-		if (servlet != null) {
-			http.unregister(alias);
-			http.unregisterFilter(filter);
-			servlet.destroy();
-			servlet = null;
+	@Override
+	public void removedService(ServiceReference reference, Object service) {
+
+		HttpServiceTracker tracker = trackers.remove(reference);
+		if (tracker != null) {
+			tracker.close();
+			tracker = null;
 		}
+
 	}
 
 }
