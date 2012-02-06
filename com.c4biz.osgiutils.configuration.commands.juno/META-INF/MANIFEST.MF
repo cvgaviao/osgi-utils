@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.c4biz.osgiutils.configuration.commands.juno;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Localization: OSGI-INF/l10n/bundle
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/*.xml
+Require-Bundle: org.apache.felix.gogo.command;bundle-version="0.8.0",
+ org.apache.felix.gogo.runtime;bundle-version="0.8.0",
+ org.apache.felix.gogo.shell;bundle-version="0.8.0"
+Import-Package: org.eclipse.osgi.framework.console;version="1.1.0",
+ org.osgi.framework;version="1.7.0",
+ org.osgi.service.cm
