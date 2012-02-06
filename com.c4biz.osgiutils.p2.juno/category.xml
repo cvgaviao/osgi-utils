@@ -27,6 +27,9 @@
    <feature url="features/com.c4biz.osgiutils.feature.cm.juno_0.0.1.qualifier.jar" id="com.c4biz.osgiutils.feature.cm.juno" version="0.0.1.qualifier">
       <category name="c4biz_osgi_utils"/>
    </feature>
+   <feature url="features/com.c4biz.osgiutils.feature.vaadin.jetty.shiro_0.0.1.qualifier.jar" id="com.c4biz.osgiutils.feature.vaadin.jetty.shiro" version="0.0.1.qualifier">
+      <category name="c4biz_osgi_utils"/>
+   </feature>
    <category-def name="c4biz_osgi_utils" label="OSGi Utilities"/>
    <category-def name="c4biz_osgi_deps" label="Dependencies"/>
 </site>
