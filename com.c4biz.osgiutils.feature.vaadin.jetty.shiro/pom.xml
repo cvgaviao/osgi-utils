@@ -12,7 +12,7 @@
 	</parent>
 
 	<artifactId>com.c4biz.osgiutils.feature.vaadin.jetty.shiro</artifactId>
-	<name>OSGi Utilities :: Feature for Jetty server and Vaadin with Apache Shiro Security support</name>
+	<name>OSGi Utilities :: Feature for Vaadin in an Equinox Jetty Server with Apache Shiro Security support</name>
 	<packaging>eclipse-feature</packaging>
 
 	<dependencies>
