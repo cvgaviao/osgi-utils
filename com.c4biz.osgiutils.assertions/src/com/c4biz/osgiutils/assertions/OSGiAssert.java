@@ -19,6 +19,8 @@ package com.c4biz.osgiutils.assertions;
 import org.junit.Assert;
 import org.osgi.framework.BundleContext;
 
+import com.c4biz.osgiutils.assertions.bundles.BundleUtils;
+
 /**
  * Abstract OSGi Asset class with BundleContext Handling
  *
@@ -32,7 +34,7 @@ public abstract class OSGiAssert {
      * BundleContext value
      */
     private static BundleContext bc;
-
+    
     /**
      * Initialize all OSGi assertions with BundleContext value
      *
@@ -40,7 +42,18 @@ public abstract class OSGiAssert {
      * @throws IllegalStateException utility class is already initialized
      */
     public static void init(BundleContext bc) {
-        OSGiAssert.bc = bc;
+        init(bc, false);
+    }
+
+    /**
+     * Initialize all OSGi assertions with BundleContext value
+     *
+     * @param bc BundleContext value
+     * @throws IllegalStateException utility class is already initialized
+     */
+    public static void init(BundleContext bc, boolean showLog) {
+    	OSGiAssert.bc = bc;
+    	BundleUtils.setShowLog(showLog);
     }
 
     /**

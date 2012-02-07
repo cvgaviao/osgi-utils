@@ -30,6 +30,10 @@ import org.osgi.framework.Version;
  * @see org.osgi.framework.BundleContext
  */
 public class BundleUtils {
+	
+    private static boolean showLog;
+
+
 	/**
 	 * Utility class. Only static methods are available.
 	 */
@@ -88,8 +92,9 @@ public class BundleUtils {
 			Version version) {
 		Bundle[] bundles = bc.getBundles();
 		for (Bundle b : bundles) {
-			System.out.println("Bundle is " + b.getBundleId() + ": "
-					+ b.getSymbolicName());
+			if (isShowLog())
+				System.out.println("Bundle is " + b.getBundleId() + ": "
+						+ b.getSymbolicName());
 			if (version != null) {
 				if (b.getSymbolicName().equals(symbolicName)
 						&& b.getVersion().equals(version)) {
@@ -102,5 +107,13 @@ public class BundleUtils {
 			}
 		}
 		return null;
+	}
+
+	public static boolean isShowLog() {
+		return showLog;
+	}
+
+	public static void setShowLog(boolean showLog) {
+		BundleUtils.showLog = showLog;
 	}
 }
