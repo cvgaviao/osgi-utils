@@ -12,7 +12,7 @@
 	</parent>
 
 
-	<artifactId>com.c4biz.osgiutils.feature.logging</artifactId>
+	<artifactId>com.c4biz.osgiutils.feature.logging.indigo</artifactId>
 	<name>OSGi Utilities :: Feature for General Logging Reader bundle</name>
 	<packaging>eclipse-feature</packaging>
 

@@ -33,7 +33,7 @@
 		<derby-version>10.8.2.2</derby-version>
 		<drools.version>5.3.2-SNAPSHOT</drools.version>
 		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
-		<tycho-version>0.14.0-SNAPSHOT</tycho-version>
+		<tycho-version>0.14.0</tycho-version>
 		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.RC5</jetty-p2>
 		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
 	</properties>
@@ -69,12 +69,12 @@
 				<module>com.c4biz.osgiutils.feature.drools-jbpm</module>
 				<module>com.c4biz.osgiutils.feature.derby</module>
 				<module>com.c4biz.osgiutils.feature.mysql</module>
-				<module>com.c4biz.osgiutils.feature.logging</module>
+				<module>com.c4biz.osgiutils.feature.logging.indigo</module>
 				<module>com.c4biz.osgiutils.feature.cm.indigo</module>
 				<module>com.c4biz.osgiutils.feature.security.shiro</module>
 				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
 				<module>com.c4biz.osgiutils.feature.vaadin6</module>
-				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro</module>
+				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.indigo</module>
 				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
 				<module>com.c4biz.osgiutils.configuration.commands.indigo</module>
 				<module>com.c4biz.osgiutils.configuration.manager</module>
@@ -106,12 +106,12 @@
 				<module>com.c4biz.osgiutils.feature.drools-jbpm</module>
 				<module>com.c4biz.osgiutils.feature.derby</module>
 				<module>com.c4biz.osgiutils.feature.mysql</module>
-				<module>com.c4biz.osgiutils.feature.logging</module>
+				<module>com.c4biz.osgiutils.feature.logging.juno</module>
 				<module>com.c4biz.osgiutils.feature.cm.juno</module>
 				<module>com.c4biz.osgiutils.feature.security.shiro</module>
 				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
 				<module>com.c4biz.osgiutils.feature.vaadin6</module>
-				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro</module>
+				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.juno</module>
 				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
 				<module>com.c4biz.osgiutils.configuration.commands.juno</module>
 				<module>com.c4biz.osgiutils.configuration.manager</module>
@@ -300,8 +300,8 @@
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>tycho-snapshots</id>
-			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<id>tycho-0.14.0-staged</id>
+			<url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-004/</url>
 		</pluginRepository>
 	</pluginRepositories>
 

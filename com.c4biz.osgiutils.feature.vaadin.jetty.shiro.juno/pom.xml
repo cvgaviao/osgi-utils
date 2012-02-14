@@ -11,7 +11,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>com.c4biz.osgiutils.feature.vaadin.jetty.shiro</artifactId>
+	<artifactId>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.juno</artifactId>
 	<name>OSGi Utilities :: Feature for Vaadin in an Equinox Jetty Server with Apache Shiro Security support</name>
 	<packaging>eclipse-feature</packaging>
 
