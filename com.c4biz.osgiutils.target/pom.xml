@@ -3,7 +3,7 @@
   <parent>
     <artifactId>com.c4biz.osgiutils</artifactId>
     <groupId>com.c4biz.osgiutils</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3</version>
     <relativePath>..</relativePath>
   </parent>
   <groupId>com.c4biz.osgiutils.target</groupId>

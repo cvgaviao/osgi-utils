@@ -8,7 +8,7 @@
 
 	<groupId>com.c4biz.osgiutils</groupId>
 	<artifactId>com.c4biz.osgiutils</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.3</version>
 	<packaging>pom</packaging>
 	<name>OSGi Utilities :: Parent POM</name>
 
@@ -26,6 +26,7 @@
 		</developer>
 	</developers>
 	<properties>
+		<next-release>0.0.3</next-release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.1.0</hamcrest.version>
 		<shiro-version>1.2.0</shiro-version>
@@ -34,10 +35,38 @@
 		<drools.version>5.3.2-SNAPSHOT</drools.version>
 		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
 		<tycho-version>0.14.0</tycho-version>
-		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.RC5</jetty-p2>
+		<vaadin-version>6.7.5</vaadin-version>
+		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.v20120127</jetty-p2>
 		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
 	</properties>
 	<profiles>
+		<profile>
+			<id>prepare-for-next-release</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<defaultGoal>org.eclipse.tycho:tycho-versions-plugin:set-version</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-versions-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<executions>
+							<execution>
+								<id>change-next-release</id>
+								<goals>
+									<goal>set-version</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<newVersion>${next-release}</newVersion>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>cm</id>
 			<activation>
@@ -72,10 +101,9 @@
 				<module>com.c4biz.osgiutils.feature.logging.indigo</module>
 				<module>com.c4biz.osgiutils.feature.cm.indigo</module>
 				<module>com.c4biz.osgiutils.feature.security.shiro</module>
-				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
-				<module>com.c4biz.osgiutils.feature.vaadin6</module>
+				<module>com.c4biz.osgiutils.feature.vaadin</module>
 				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.indigo</module>
-				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
+				<module>com.c4biz.osgiutils.vaadin.equinox.shiro</module>
 				<module>com.c4biz.osgiutils.configuration.commands.indigo</module>
 				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.logging</module>
@@ -109,10 +137,9 @@
 				<module>com.c4biz.osgiutils.feature.logging.juno</module>
 				<module>com.c4biz.osgiutils.feature.cm.juno</module>
 				<module>com.c4biz.osgiutils.feature.security.shiro</module>
-				<module>com.c4biz.osgiutils.feature.jpa.gemini</module>
-				<module>com.c4biz.osgiutils.feature.vaadin6</module>
+				<module>com.c4biz.osgiutils.feature.vaadin</module>
 				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.juno</module>
-				<module>com.c4biz.osgiutils.vaadin6.shiro</module>
+				<module>com.c4biz.osgiutils.vaadin.equinox.shiro</module>
 				<module>com.c4biz.osgiutils.configuration.commands.juno</module>
 				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.logging</module>
@@ -258,6 +285,12 @@
 				<groupId>org.apache.derby</groupId>
 				<artifactId>derbyclient</artifactId>
 				<version>${derby-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin</artifactId>
+				<version>${vaadin-version}</version>
 			</dependency>
 
 		</dependencies>
