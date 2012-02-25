@@ -3,20 +3,19 @@
 	<parent>
 		<groupId>com.c4biz.osgiutils</groupId>
 		<artifactId>com.c4biz.osgiutils</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.3</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>eclipse-plugin</packaging>
-	<name>OSGi Utilities :: Vaadin 6.x OSGi bundle with Apache Shiro support</name>
-	<artifactId>com.c4biz.osgiutils.vaadin6.shiro</artifactId>
+	<name>OSGi Utilities :: Vaadin for OSGi bundle in Equinox with Apache Shiro Security</name>
+	<artifactId>com.c4biz.osgiutils.vaadin.equinox.shiro</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin</artifactId>
-			<version>6.7.4</version>
 		</dependency>
 
 		<dependency>

@@ -9,7 +9,7 @@
  * Contributors:
  *    Cristiano Gavião - initial API and implementation
  *******************************************************************************/
-package com.c4biz.osgiutils.vaadin6.shiro;
+package com.c4biz.osgiutils.vaadin.equinox.shiro;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,8 +41,6 @@ public class WebResourcesHttpContext implements HttpContext {
 			final HttpServletResponse response) throws IOException {
 
 		// security is handled by shiro
-		// TODO study a poosibility to put shiro here
-
 		return true;
 	}
 
@@ -63,14 +61,30 @@ public class WebResourcesHttpContext implements HttpContext {
 			return "text/javascript";
 		} else if (name.endsWith("css")) {
 			return "text/css";
-		} else if (name.endsWith("html")) {
+		} else if (name.endsWith("html") || name.endsWith("htm")) {
 			return "text/html";
+		} else if (name.endsWith("jpeg") || name.endsWith("jpg")
+				|| name.endsWith("jpe")) {
+			return "image/jpeg";
 		} else if (name.endsWith("png")) {
 			return "image/png";
 		} else if (name.endsWith("gif")) {
 			return "image/gif";
+		} else if (name.endsWith("txt")) {
+			return "text/plain";
+		} else if (name.endsWith("rtf")) {
+			return "text/richtext";
+		} else if (name.endsWith("mpg") || name.endsWith("mpeg")
+				|| name.endsWith("mpe")) {
+			return "video/mpeg";
+		} else if (name.endsWith("ogv") || name.endsWith("ogg")) {
+			return "video/ogg";
+		} else if (name.endsWith("mp4")) {
+			return "video/mp4";
+		} else if (name.endsWith("webm")) {
+			return "video/webm";
 		} else {
-			System.out.println("OUPAAAAAA : " + name);
+			System.out.println("NOT DECLARED MIME : " + name);
 			return null;
 		}
 
