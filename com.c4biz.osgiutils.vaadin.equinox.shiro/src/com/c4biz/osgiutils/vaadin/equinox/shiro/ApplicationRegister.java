@@ -45,8 +45,10 @@ public class ApplicationRegister implements ManagedService {
 	}
 
 	public void kill() {
-		if (filter != null)
+		if (filter != null){
 			http.unregisterFilter(filter);
+			filter = null;
+		}
 		if (alias != null) {
 			try {
 				http.unregister(alias);

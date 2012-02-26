@@ -8,10 +8,25 @@
 
 	<groupId>com.c4biz.osgiutils</groupId>
 	<artifactId>com.c4biz.osgiutils</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>OSGi Utilities :: Parent POM</name>
 
+	<properties>
+		<next-release>0.0.4-SNAPSHOT</next-release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hamcrest.version>1.1.0</hamcrest.version>
+		<shiro-version>1.2.0</shiro-version>
+		<mysql-connector>5.1.18</mysql-connector>
+		<derby-version>10.8.2.2</derby-version>
+		<drools.version>5.3.2-SNAPSHOT</drools.version>
+		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
+		<tycho-version>0.14.0</tycho-version>
+		<vaadin-version>6.7.5</vaadin-version>
+		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.v20120127</jetty-p2>
+		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
+	</properties>
+	
 	<organization>
 		<name>C4Biz Tecnologia em Sistemas de Informação</name>
 		<!-- <url>www.c4biz.com.br</url> -->
@@ -25,20 +40,6 @@
 			<timezone>-3</timezone>
 		</developer>
 	</developers>
-	<properties>
-		<next-release>0.0.3</next-release>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<hamcrest.version>1.1.0</hamcrest.version>
-		<shiro-version>1.2.0</shiro-version>
-		<mysql-connector>5.1.18</mysql-connector>
-		<derby-version>10.8.2.2</derby-version>
-		<drools.version>5.3.2-SNAPSHOT</drools.version>
-		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
-		<tycho-version>0.14.0</tycho-version>
-		<vaadin-version>6.7.5</vaadin-version>
-		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.v20120127</jetty-p2>
-		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
-	</properties>
 	<profiles>
 		<profile>
 			<id>prepare-for-next-release</id>

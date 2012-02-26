@@ -38,10 +38,11 @@ public class VaadinSession implements HttpSessionBindingListener {
 	@Override
 	public void valueUnbound(HttpSessionBindingEvent arg0) {
 		if (app != null) {
-			app.close();
-			app = null;
+//			app.close();
+//			app = null;
 		}
-		if (instance != null)
-			instance.dispose();
+		if (instance != null){
+//			instance.dispose();
+		}
 	}
 }

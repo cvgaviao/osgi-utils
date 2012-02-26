@@ -69,4 +69,9 @@ class VaadinOSGiServlet extends AbstractApplicationServlet {
 		
 		return (Application) vaadinSession.getApp();
 	}
+	
+	@Override
+	public void destroy() {
+		super.destroy();
+	}
 }
