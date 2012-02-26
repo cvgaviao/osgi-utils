@@ -8,12 +8,12 @@
 
 	<groupId>com.c4biz.osgiutils</groupId>
 	<artifactId>com.c4biz.osgiutils</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.5</version>
 	<packaging>pom</packaging>
 	<name>OSGi Utilities :: Parent POM</name>
 
 	<properties>
-		<next-release>0.0.5-SNAPSHOT</next-release>
+		<next-release>0.0.5</next-release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.1.0</hamcrest.version>
 		<shiro-version>1.2.0</shiro-version>

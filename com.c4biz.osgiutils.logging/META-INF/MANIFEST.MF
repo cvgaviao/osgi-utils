@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.c4biz.osgiutils.logging.reader;singleton:=true
-Bundle-Version: 0.0.5.qualifier
+Bundle-Version: 0.0.5
 Import-Package: org.eclipse.equinox.log;version="1.0.0",
  org.eclipse.osgi.framework.log;version="1.1.0",
  org.osgi.framework,

@@ -2,7 +2,7 @@
 <feature
       id="com.c4biz.osgiutils.feature.drools-jbpm"
       label="%featureName"
-      version="0.0.5.qualifier"
+      version="0.0.5"
       provider-name="%providerName">
 
    <description>
