@@ -2,7 +2,7 @@
 <feature
       id="com.c4biz.osgiutils.feature.equinox.juno"
       label="%featureName"
-      version="0.0.4"
+      version="0.0.5.qualifier"
       provider-name="%providerName">
 
    <description>
@@ -46,6 +46,34 @@
 
    <plugin
          id="org.eclipse.equinox.preferences"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.core.variables"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.launcher"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.http.registry"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ant.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
