@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.c4biz.osgiutils.configuration.commands.juno;singleton:=true
-Bundle-Version: 0.0.5
+Bundle-Version: 0.0.6.qualifier
 Bundle-Localization: OSGI-INF/l10n/bundle
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName

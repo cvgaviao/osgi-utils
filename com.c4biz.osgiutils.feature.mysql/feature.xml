@@ -2,7 +2,7 @@
 <feature
       id="com.c4biz.osgiutils.feature.mysql"
       label="%featureName"
-      version="0.0.5"
+      version="0.0.6.qualifier"
       provider-name="%providerName">
 
    <description>
