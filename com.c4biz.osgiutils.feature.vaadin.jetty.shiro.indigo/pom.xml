@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.c4biz.osgiutils</groupId>
 		<artifactId>com.c4biz.osgiutils</artifactId>
-		<version>0.0.6</version>
+		<version>0.0.7-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -19,12 +19,12 @@
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.vaadin</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.security.shiro</artifactId>
-			<version>0.0.6</version>
+			<version>0.0.7-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
