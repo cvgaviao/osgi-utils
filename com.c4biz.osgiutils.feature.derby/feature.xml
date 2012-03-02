@@ -2,7 +2,7 @@
 <feature
       id="com.c4biz.osgiutils.feature.derby"
       label="%featureName"
-      version="0.0.7.qualifier"
+      version="0.0.7.GA"
       provider-name="%providerName">
 
    <description>
