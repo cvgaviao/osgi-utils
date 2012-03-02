@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: com.c4biz.osgiutils.jdk.deps
-Bundle-Version: 0.0.7.GA
+Bundle-Version: 0.0.8.qualifier
 Bundle-Vendor: %providerName
 Fragment-Host: org.eclipse.osgi;extension:=framework
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

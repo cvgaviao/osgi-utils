@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.c4biz.osgiutils.configuration.commands.indigo;singleton:=true
-Bundle-Version: 0.0.7.GA
+Bundle-Version: 0.0.8.qualifier
 Bundle-Localization: OSGI-INF/l10n/bundle
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
