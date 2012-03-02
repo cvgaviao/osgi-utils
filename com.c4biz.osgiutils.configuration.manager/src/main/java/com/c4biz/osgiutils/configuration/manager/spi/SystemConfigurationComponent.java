@@ -45,6 +45,7 @@ import com.c4biz.osgiutils.configuration.manager.service.IConfigurationService;
  * @author cvgaviao
  * 
  */
+@SuppressWarnings("unchecked")
 public class SystemConfigurationComponent implements IConfigurationService {
 
 	private ConfigurationAdmin configurationAdmin;
@@ -468,32 +469,27 @@ public class SystemConfigurationComponent implements IConfigurationService {
 
 			configuration = configurationAdmin.createFactoryConfiguration(
 					factoryPid, null);
-			if (configuration.getProperties() == null) {
-				if (properties == null) {
-					properties = new Hashtable<String, Object>();
-				}
 
-				// add the PID as a property
-				if (pid != null && !pid.isEmpty())
-					properties.put(SERVICE_PID, pid);
-
-				configuration.update(properties);
-
-				// / just for test
-				displayFactoryConfiguration(factoryPid);
-
-				getLogService().log(
-						LogService.LOG_DEBUG,
-						"Initialized store under FactoryPID: '" + factoryPid
-								+ "' and PID: '" + pid
-								+ "' , with this properties: "
-								+ properties.toString());
-			} else {
-				getLogService().log(
-						LogService.LOG_WARNING,
-						"Configuration for FactoryPID was already initialized: ' "
-								+ factoryPid + "'.");
+			if (properties == null) {
+				properties = new Hashtable<String, Object>();
 			}
+
+			// add the PID as a property
+			if (pid != null && !pid.isEmpty())
+				properties.put(SERVICE_PID, pid);
+
+			configuration.update(properties);
+
+			// / just for test
+			// displayFactoryConfiguration(factoryPid);
+
+			getLogService().log(
+					LogService.LOG_DEBUG,
+					"Initialized store under FactoryPID: '" + factoryPid
+							+ "' and PID: '" + pid
+							+ "' , with this properties: "
+							+ properties.toString());
+
 		} catch (IOException e) {
 			getLogService().log(LogService.LOG_ERROR,
 					"Error on setup Configuration Service", e);
