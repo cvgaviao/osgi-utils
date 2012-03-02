@@ -11,19 +11,5 @@
 	<packaging>eclipse-plugin</packaging>
 	<name>OSGi Utilities :: Common OSGi Assertions Bundle</name>
 	<artifactId>com.c4biz.osgiutils.assertions</artifactId>
-
-<!-- 	<dependencies> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hamcrest</groupId> -->
-<!-- 			<artifactId>hamcrest-core</artifactId> -->
-<!-- 			</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hamcrest</groupId> -->
-<!-- 			<artifactId>hamcrest-library</artifactId> -->
-<!-- 			</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hamcrest</groupId> -->
-<!-- 			<artifactId>hamcrest-integration</artifactId> -->
-<!-- 			</dependency> -->
-<!-- 	</dependencies> -->
+	
 </project>
