@@ -11,8 +11,12 @@ Export-Package: com.c4biz.osgiutils.assertions,
  com.c4biz.osgiutils.assertions.bundles,
  com.c4biz.osgiutils.assertions.filters,
  com.c4biz.osgiutils.assertions.services
-Import-Package: org.junit,
+Import-Package: com.c4biz.osgiutils.assertions,
+ com.c4biz.osgiutils.assertions.bundles,
+ com.c4biz.osgiutils.assertions.filters,
+ com.c4biz.osgiutils.assertions.services,
  org.osgi.framework;version="1.6.0",
  org.osgi.service.packageadmin;version="1.2.0",
  org.osgi.util.tracker;version="1.5.0"
+Require-Bundle: org.junit;bundle-version="4.8.2"
 
