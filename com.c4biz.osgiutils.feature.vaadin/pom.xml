@@ -19,7 +19,13 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin</artifactId>
-			</dependency>
+			
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons.lazyquerycontainer</groupId>
+			<artifactId>vaadin-lazyquerycontainer</artifactId>
+			<version>${vaadin-lazyquery-version}</version>
+		</dependency>
 	</dependencies>
 
 </project>
