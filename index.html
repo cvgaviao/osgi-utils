@@ -1,0 +1,108 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Osgi-utils</title>
+  <meta name="description" content="A set of eclipse features that wraps common bundles to be installed in Target Platform using P2.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Osgi-utils</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">A set of eclipse features that wraps common bundles to be installed in Target Platform using P2.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/cvgaviao/osgi-utils/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/cvgaviao/osgi-utils/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/cvgaviao/osgi-utils" class="code">View Osgi-utils on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>OSGi Utilities</h1>
+
+<h2>The Goal</h2>
+
+<p>Nowadays I'm working a lot with OSGi, more precisally with Equinox. And I'm using two tools to build my projects: Eclipse Tycho for manifes-first projects and Maven Bundle Plugin for pom-first projects. </p>
+
+<p>It is not possible to build both types of project same time using Tycho. It must be done in two steps always. </p>
+
+<p>So, to help me, I've decided to create one P2 Repository and concentrate there the most important bundles that I'm using, grouped by features, including those that are already OSGi and those that was OSGified (by maven-bundle-plugin).</p>
+
+<p>This way all other projects can be setup using a Target Platform Definition file pointing to the P2 and I can only use Tycho for the entire building.</p>
+
+<p>The P2 has two categories: </p>
+
+<p><strong>OSGi Utils</strong>, that contains utilities made by myself or that was based in somebody work; </p>
+
+<p><strong>Dependencies</strong>, that is basically a repackaging of already existent bundles or OSGified ones.</p>
+
+<h2>Building the P2 Repository</h2>
+
+<p>This build will create a P2 repository at directory "OSGi-Utils/com.c4biz.osgiutils.p2/target/repository" that contains all features needed by EPF to be installed as plugins.</p>
+
+<h3>Using an OS terminal console</h3>
+
+<p>1) Clone the repository</p>
+
+<pre><code>git clone git@github.com:cvgaviao/OSGi-Utils.git       
+</code></pre>
+
+<p>2) Go to the OSGi-Utils parent directory and call the maven command</p>
+
+<pre><code>cd OSGi-Utils/
+mvn clean verify -P p2-all 
+</code></pre>
+
+<h3>Using Eclipse IDE Launcher</h3>
+
+<p>If you want you can import the projects into Eclipse and build them using the supplied launcher. You must ensure that you have installed the latest m2e plugin and its tycho add-on.</p>
+
+<p>1) Import the project using 'Existing Maven Projects' </p>
+
+<p>2) Go to 'Run Configurations' and select "OSGi Utilities - P2".</p>
+
+<h3>Accessing the generated P2 repository</h3>
+
+<ul>
+<li>You must add this address in your Target Platform Definition: <a href="http://cvgaviao.github.com/osgi-utils/p2/juno">http://cvgaviao.github.com/osgi-utils/p2/juno</a>
+</li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/cvgaviao" class="avatar"><img src="https://secure.gravatar.com/avatar/d9b7de7e30104c9409f37c16a087a3af?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/cvgaviao">cvgaviao</a> maintains <a href="https://github.com/cvgaviao/osgi-utils">Osgi-utils</a></p>
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/cvgaviao/osgi-utils/tarball/master" class="tar">tar</a><a href="https://github.com/cvgaviao/osgi-utils/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
