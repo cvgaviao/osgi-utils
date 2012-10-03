@@ -25,10 +25,11 @@
          unpack="false"/>
 
    <plugin
-         id="vaadin-lazyquerycontainer"
+         id="com.c4biz.osgiutils.jdk.deps"
          download-size="0"
          install-size="0"
          version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>

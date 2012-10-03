@@ -25,11 +25,6 @@
          id="com.c4biz.osgiutils.feature.vaadin"
          version="0.0.0"/>
 
-   <requires>
-      <import plugin="org.eclipse.equinox.http.jetty" version="3.0.0.c4biz" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.console" version="1.0.0" match="greaterOrEqual"/>
-   </requires>
-
    <plugin
          id="javax.servlet"
          download-size="0"
@@ -323,4 +318,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>

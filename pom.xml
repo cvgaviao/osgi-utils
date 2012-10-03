@@ -13,21 +13,19 @@
 	<name>OSGi Utilities :: Parent POM</name>
 
 	<properties>
-		<next-release>0.0.8-SNAPSHOT</next-release>
+		<next-release>0.0.9-SNAPSHOT</next-release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<hamcrest.version>1.1.0</hamcrest.version>
 		<shiro-version>1.2.0</shiro-version>
-		<mysql-connector>5.1.18</mysql-connector>
+		<mysql-connector>5.1.21</mysql-connector>
 		<derby-version>10.8.2.2</derby-version>
-		<drools.version>5.3.2-SNAPSHOT</drools.version>
-		<jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
-		<tycho-version>0.14.0</tycho-version>
-		<vaadin-version>6.7.5</vaadin-version>
-		<vaadin-lazyquery-version>1.2.12-SNAPSHOT</vaadin-lazyquery-version>
-		<jetty-p2>http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/8.1.0.v20120127</jetty-p2>
-		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120123151124/repository/</orbit-site>
+		<drools.version>5.5.0-SNAPSHOT</drools.version>
+		<jbpm.version>5.4.0-SNAPSHOT</jbpm.version>
+		<tycho-version>0.15.0</tycho-version>
+		<vaadin-version>6.8.4</vaadin-version>
+		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120917013952/repository/</orbit-site>
 	</properties>
-	
+
 	<organization>
 		<name>C4Biz Tecnologia em Sistemas de Informação</name>
 		<!-- <url>www.c4biz.com.br</url> -->
@@ -83,52 +81,17 @@
 				<module>com.c4biz.osgiutils.assertions</module>
 			</modules>
 		</profile>
-		<profile>
-			<id>p2-indigo</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<defaultGoal>verify</defaultGoal>
-			</build>
-			<properties>
-				<eclipse-repo>http://download.eclipse.org/releases/indigo</eclipse-repo>
-			</properties>
-			<modules>
-				<module>com.c4biz.osgiutils.p2.indigo</module>
-				<module>com.c4biz.osgiutils.feature.assertions</module>
-				<module>com.c4biz.osgiutils.feature.drools-jbpm</module>
-				<module>com.c4biz.osgiutils.feature.derby</module>
-				<module>com.c4biz.osgiutils.feature.mysql</module>
-				<module>com.c4biz.osgiutils.feature.logging.indigo</module>
-				<module>com.c4biz.osgiutils.feature.cm.indigo</module>
-				<module>com.c4biz.osgiutils.feature.security.shiro</module>
-				<module>com.c4biz.osgiutils.feature.vaadin</module>
-				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.indigo</module>
-				<module>com.c4biz.osgiutils.vaadin.equinox.shiro</module>
-				<module>com.c4biz.osgiutils.configuration.commands.indigo</module>
-				<module>com.c4biz.osgiutils.configuration.manager</module>
-				<module>com.c4biz.osgiutils.logging</module>
-				<module>com.c4biz.osgiutils.jdk.deps</module>
-				<module>com.c4biz.osgiutils.assertions</module>
-				<module>com.c4biz.osgiutils.configuration.tests</module>
-				<module>com.c4biz.osgiutils.configuration.manager.test.conf</module>
-				<module>com.c4biz.osgiutils.feature.it</module>
-				<module>com.c4biz.osgiutils.feature.equinox.indigo</module>
-				<module>org.eclipse.equinox.http.jetty</module>
-			</modules>
-		</profile>
+
 		<profile>
 			<id>p2-juno</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>verify</defaultGoal>
+				<defaultGoal>clean verify</defaultGoal>
 			</build>
 			<properties>
 				<eclipse-repo>http://download.eclipse.org/releases/juno</eclipse-repo>
-				<equinox-p2>http://download.eclipse.org/eclipse/updates/3.8milestones</equinox-p2>
 			</properties>
 			<modules>
 				<module>com.c4biz.osgiutils.p2.juno</module>
@@ -142,30 +105,29 @@
 				<module>com.c4biz.osgiutils.feature.vaadin</module>
 				<module>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.juno</module>
 				<module>com.c4biz.osgiutils.vaadin.equinox.shiro</module>
-				<module>com.c4biz.osgiutils.configuration.commands.juno</module>
-				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.logging</module>
 				<module>com.c4biz.osgiutils.jdk.deps</module>
 				<module>com.c4biz.osgiutils.assertions</module>
+				<module>com.c4biz.osgiutils.configuration.commands.juno</module>
+				<module>com.c4biz.osgiutils.configuration.manager</module>
 				<module>com.c4biz.osgiutils.configuration.tests</module>
 				<module>com.c4biz.osgiutils.configuration.manager.test.conf</module>
 				<module>com.c4biz.osgiutils.feature.it</module>
 				<module>com.c4biz.osgiutils.feature.equinox.juno</module>
-				<module>org.eclipse.equinox.http.jetty</module>
 			</modules>
-			<repositories>
-				<repository>
-					<id>Equinox</id>
-					<url>${equinox-p2}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<layout>p2</layout>
-				</repository>
-			</repositories>
+			<!-- <repositories> -->
+			<!-- <repository> -->
+			<!-- <id>Equinox</id> -->
+			<!-- <url>${equinox-p2}</url> -->
+			<!-- <releases> -->
+			<!-- <enabled>true</enabled> -->
+			<!-- </releases> -->
+			<!-- <snapshots> -->
+			<!-- <enabled>true</enabled> -->
+			<!-- </snapshots> -->
+			<!-- <layout>p2</layout> -->
+			<!-- </repository> -->
+			<!-- </repositories> -->
 
 		</profile>
 		<profile>
@@ -222,19 +184,26 @@
 				<groupId>org.drools</groupId>
 				<artifactId>knowledge-api</artifactId>
 				<version>${drools.version}</version>
-				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-core</artifactId>
 				<version>${drools.version}</version>
-				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-compiler</artifactId>
 				<version>${drools.version}</version>
-				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-decisiontables</artifactId>
+				<version>${drools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-templates</artifactId>
+				<version>${drools.version}</version>
 			</dependency>
 			<!-- <dependency> -->
 			<!-- <groupId>org.drools</groupId> -->
@@ -261,21 +230,21 @@
 				<artifactId>jbpm-bpmn2</artifactId>
 				<version>${jbpm.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-human-task</artifactId>
-				<version>${jbpm.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-persistence-jpa</artifactId>
-				<version>${jbpm.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-bam</artifactId>
-				<version>${jbpm.version}</version>
-			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.jbpm</groupId> -->
+<!-- 				<artifactId>jbpm-human-task</artifactId> -->
+<!-- 				<version>${jbpm.version}</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.jbpm</groupId> -->
+<!-- 				<artifactId>jbpm-persistence-jpa</artifactId> -->
+<!-- 				<version>${jbpm.version}</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.jbpm</groupId> -->
+<!-- 				<artifactId>jbpm-bam</artifactId> -->
+<!-- 				<version>${jbpm.version}</version> -->
+<!-- 			</dependency> -->
 
 			<dependency>
 				<groupId>mysql</groupId>
@@ -322,23 +291,32 @@
 			<layout>p2</layout>
 		</repository>
 		<repository>
-			<id>Jetty</id>
-			<url>${jetty-p2}</url>
+			<id>snapshots.jboss.org</id>
+			<name>JBoss Snapshot Repository</name>
+			<url>http://snapshots.jboss.org/maven2</url>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>bundles.service-mix</id>
+			<name>service-mix bundles</name>
+			<url>http://repo1.maven.org/maven2/org/apache/servicemix/bundles/</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.release</id>
+			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/release</url>
+		</repository>
+		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>tycho-0.14.0-staged</id>
-			<url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-004/</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<build>
 

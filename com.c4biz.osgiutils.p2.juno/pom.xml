@@ -13,7 +13,7 @@
 
 	<properties>
 		<from-repo>${project.build.directory}/repository</from-repo>
-		<base-to-repo>/Users/cvgaviao/Development/C4Biz_Projects/OsgiUtilities/OSGi-Utils-Web</base-to-repo>
+		<base-to-repo>/Users/cvgaviao/Development/C4Biz_Projects/OsgiUtilities/osgi-utils-gh-pages</base-to-repo>
 		<to-repo>${base-to-repo}/p2/juno</to-repo>
 	</properties>
 
@@ -96,21 +96,21 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.it</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.c4biz.osgiutils</groupId> -->
+<!-- 			<artifactId>com.c4biz.osgiutils.feature.it</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.derby</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.cm.juno</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.c4biz.osgiutils</groupId> -->
+<!-- 			<artifactId>com.c4biz.osgiutils.feature.cm.juno</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.drools-jbpm</artifactId>
@@ -121,26 +121,26 @@
 			<artifactId>com.c4biz.osgiutils.feature.mysql</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.logging.juno</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.assertions</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.c4biz.osgiutils</groupId> -->
+<!-- 			<artifactId>com.c4biz.osgiutils.feature.logging.juno</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.c4biz.osgiutils</groupId> -->
+<!-- 			<artifactId>com.c4biz.osgiutils.feature.assertions</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.vaadin.jetty.shiro.juno</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.c4biz.osgiutils</groupId>
-			<artifactId>com.c4biz.osgiutils.feature.vaadin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.c4biz.osgiutils</groupId> -->
+<!-- 			<artifactId>com.c4biz.osgiutils.feature.vaadin</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.c4biz.osgiutils</groupId>
 			<artifactId>com.c4biz.osgiutils.feature.security.shiro</artifactId>

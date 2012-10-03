@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component name="org.eclipse.equinox.http.jetty_3.0.0.v20111202-1436" version="1.2">
-    <plugin id="org.eclipse.equinox.http.jetty_3.0.0.v20111202-1436"/>
-    <package name="org.eclipse.equinox.http.jetty" visibility="1">
-        <type name="JettyConfigurator" restrictions="6"/>
-        <type name="JettyConstants" restrictions="3"/>
-    </package>
-</component>

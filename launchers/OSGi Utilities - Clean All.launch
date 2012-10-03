@@ -4,7 +4,7 @@
 <stringAttribute key="M2_GOALS" value="clean -Dtycho.mode=maven"/>
 <booleanAttribute key="M2_NON_RECURSIVE" value="false"/>
 <booleanAttribute key="M2_OFFLINE" value="true"/>
-<stringAttribute key="M2_PROFILES" value="p2-indigo p2-juno"/>
+<stringAttribute key="M2_PROFILES" value="p2-juno"/>
 <listAttribute key="M2_PROPERTIES"/>
 <stringAttribute key="M2_RUNTIME" value="EMBEDDED"/>
 <booleanAttribute key="M2_SKIP_TESTS" value="false"/>
