@@ -21,9 +21,6 @@
    <feature id="com.c4biz.osgiutils.feature.assertions" version="0.0.0">
       <category name="c4biz_osgi_utils"/>
    </feature>
-   <feature id="com.c4biz.osgiutils.feature.equinox.juno" version="0.0.0">
-      <category name="c4biz_osgi_deps"/>
-   </feature>
    <feature id="com.c4biz.osgiutils.feature.cm.juno" version="0.0.0">
       <category name="c4biz_osgi_utils"/>
    </feature>

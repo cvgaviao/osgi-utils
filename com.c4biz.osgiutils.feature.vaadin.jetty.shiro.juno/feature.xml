@@ -25,10 +25,6 @@
          id="com.c4biz.osgiutils.feature.vaadin"
          version="0.0.0"/>
 
-   <includes
-         id="com.c4biz.osgiutils.feature.equinox.juno"
-         version="0.0.0"/>
-
    <plugin
          id="com.c4biz.osgiutils.vaadin.equinox.shiro"
          download-size="0"

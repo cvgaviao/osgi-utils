@@ -88,6 +88,13 @@
          unpack="false"/>
 
    <plugin
+         id="com.springsource.jxl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.xmlpull"
          download-size="0"
          install-size="0"
@@ -120,6 +127,34 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.stream"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="cdi.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.drools.osgi.wrapper.protobuf-java"
+         download-size="0"
+         install-size="0"
+         version="2.4.1"
          unpack="false"/>
 
    <plugin

@@ -113,7 +113,6 @@
 				<module>com.c4biz.osgiutils.configuration.tests</module>
 				<module>com.c4biz.osgiutils.configuration.manager.test.conf</module>
 				<module>com.c4biz.osgiutils.feature.it</module>
-				<module>com.c4biz.osgiutils.feature.equinox.juno</module>
 			</modules>
 			<!-- <repositories> -->
 			<!-- <repository> -->
