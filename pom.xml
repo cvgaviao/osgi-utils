@@ -19,15 +19,15 @@
 		<shiro-version>1.2.0</shiro-version>
 		<mysql-connector>5.1.21</mysql-connector>
 		<derby-version>10.8.2.2</derby-version>
-		<drools.version>5.5.0-SNAPSHOT</drools.version>
-		<jbpm.version>5.4.0-SNAPSHOT</jbpm.version>
-		<tycho-version>0.15.0</tycho-version>
+		<drools.version>5.5.0.CR1</drools.version>
+		<jbpm.version>5.4.0.CR1</jbpm.version>
+		<tycho-version>0.16.0</tycho-version>
 		<vaadin-version>6.8.4</vaadin-version>
 		<orbit-site>http://download.eclipse.org/tools/orbit/downloads/drops/S20120917013952/repository/</orbit-site>
 	</properties>
 
 	<organization>
-		<name>C4Biz Tecnologia em Sistemas de Informação</name>
+		<name>C4Bis Tecnologia em Sistemas de Informação</name>
 		<!-- <url>www.c4biz.com.br</url> -->
 	</organization>
 

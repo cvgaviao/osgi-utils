@@ -151,10 +151,24 @@
          unpack="false"/>
 
    <plugin
+         id="org.jboss.spec.javax.interceptor.jboss-interceptors-api_1.1_spec"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.drools.osgi.wrapper.protobuf-java"
          download-size="0"
          install-size="0"
-         version="2.4.1"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.el"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
