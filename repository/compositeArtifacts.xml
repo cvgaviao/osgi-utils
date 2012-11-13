@@ -5,9 +5,9 @@
 	
 	<property name='p2.timestamp' value='1243822502440'/>
   </properties>
-  <children size='2'>
+  <children size='1'>
 	
-	<child location='0.0.8.20121112-0200'/>
+	<child location='juno/0.0.8.20121112-0200'/>
 	
 
   </children>
